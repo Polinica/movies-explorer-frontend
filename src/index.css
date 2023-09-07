@@ -4,6 +4,11 @@
 /* Шрифт Inter*/
 @import url(./vendor/fonts/inter-web/inter.css);
 
+html {
+  /* Плавная прокрутка */
+  scroll-behavior: smooth;
+}
+
 /* Общий стиль для приложения */
 .page {
   /* Сглаживание */
@@ -13,17 +18,19 @@
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
-  /* Плавная прокрутка */
-  scroll-behavior: smooth;
   /* Шрифт для всей страницы */
   font-family: "Inter", Helvetica, Arial, sans-serif;
   /* Цвета страницы */
   --surface: #fff;
   --on-surface: #000;
+  --on-surface-variant: #a0a0a0;
   --promo: #465dff;
   --on-promo: #fff;
   --background: #f5f5f5;
   --on-background: #000;
+  --background-variant: #f2f2f2;
+  --primary: #2be080;
+  --on-primary: #000;
   /* Цвета страницы по умолчанию */
   background-color: var(--surface);
   color: var(--on-surface);

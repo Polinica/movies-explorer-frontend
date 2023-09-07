@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "https://polinica.github.io/movies-explorer-frontend /static/css/main.0d19c19f.css",
-    "main.js": "https://polinica.github.io/movies-explorer-frontend /static/js/main.b6f3f69a.js",
-    "static/media/Inter-Medium.woff?v=3.19": "https://polinica.github.io/movies-explorer-frontend /static/media/Inter-Medium.9053572c46aeb4b16caa.woff",
-    "static/media/Inter-Black.woff?v=3.19": "https://polinica.github.io/movies-explorer-frontend /static/media/Inter-Black.c6938660eec019fefd68.woff",
-    "static/media/Inter-Regular.woff?v=3.19": "https://polinica.github.io/movies-explorer-frontend /static/media/Inter-Regular.8c206db99195777c6769.woff",
-    "static/media/Inter-Medium.woff2?v=3.19": "https://polinica.github.io/movies-explorer-frontend /static/media/Inter-Medium.293fd13dbca5a3e450ef.woff2",
-    "static/media/Inter-Black.woff2?v=3.19": "https://polinica.github.io/movies-explorer-frontend /static/media/Inter-Black.15ca31c0a2a68f76d2d1.woff2",
-    "static/media/Inter-Regular.woff2?v=3.19": "https://polinica.github.io/movies-explorer-frontend /static/media/Inter-Regular.c8ba52b05a9ef10f4758.woff2",
-    "static/media/promo-background-logo.svg": "https://polinica.github.io/movies-explorer-frontend /static/media/promo-background-logo.4850206398467b231111.svg",
-    "index.html": "https://polinica.github.io/movies-explorer-frontend /index.html",
-    "static/media/promo-background.svg": "https://polinica.github.io/movies-explorer-frontend /static/media/promo-background.647e17b7a596a63856af.svg",
-    "main.0d19c19f.css.map": "https://polinica.github.io/movies-explorer-frontend /static/css/main.0d19c19f.css.map",
-    "main.b6f3f69a.js.map": "https://polinica.github.io/movies-explorer-frontend /static/js/main.b6f3f69a.js.map"
+    "main.css": "/movies-explorer-frontend/static/css/main.58d9e454.css",
+    "main.js": "/movies-explorer-frontend/static/js/main.a5fab8dd.js",
+    "static/media/Inter-Medium.woff?v=3.19": "/movies-explorer-frontend/static/media/Inter-Medium.9053572c46aeb4b16caa.woff",
+    "static/media/Inter-Black.woff?v=3.19": "/movies-explorer-frontend/static/media/Inter-Black.c6938660eec019fefd68.woff",
+    "static/media/Inter-Regular.woff?v=3.19": "/movies-explorer-frontend/static/media/Inter-Regular.8c206db99195777c6769.woff",
+    "static/media/Inter-Medium.woff2?v=3.19": "/movies-explorer-frontend/static/media/Inter-Medium.293fd13dbca5a3e450ef.woff2",
+    "static/media/Inter-Black.woff2?v=3.19": "/movies-explorer-frontend/static/media/Inter-Black.15ca31c0a2a68f76d2d1.woff2",
+    "static/media/Inter-Regular.woff2?v=3.19": "/movies-explorer-frontend/static/media/Inter-Regular.c8ba52b05a9ef10f4758.woff2",
+    "static/media/promo-background-logo.svg": "/movies-explorer-frontend/static/media/promo-background-logo.4850206398467b231111.svg",
+    "index.html": "/movies-explorer-frontend/index.html",
+    "static/media/promo-background.svg": "/movies-explorer-frontend/static/media/promo-background.647e17b7a596a63856af.svg",
+    "main.58d9e454.css.map": "/movies-explorer-frontend/static/css/main.58d9e454.css.map",
+    "main.a5fab8dd.js.map": "/movies-explorer-frontend/static/js/main.a5fab8dd.js.map"
   },
   "entrypoints": [
-    "static/css/main.0d19c19f.css",
-    "static/js/main.b6f3f69a.js"
+    "static/css/main.58d9e454.css",
+    "static/js/main.a5fab8dd.js"
   ]
 }

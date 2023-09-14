@@ -1,3 +1,4 @@
+import AuthLinks from "../AuthLinks/AuthLinks";
 import Promo from "../Promo/Promo";
 import NavTab from "../NavTab/NavTab";
 import Student from "../Student/Student";
@@ -11,7 +12,7 @@ function Landing() {
   return (
     <>
       <Header isThemed={true}>
-        <Navigation />
+        <AuthLinks />
       </Header>
       <main>
         <Promo />

@@ -3,12 +3,16 @@ import NavTab from "../NavTab/NavTab";
 import Student from "../Student/Student";
 import AboutProject from "../AboutProject/AboutProject";
 import Techs from "../Techs/Techs";
-import Footer from '../Footer/Footer';
+import Footer from "../Footer/Footer";
+import Header from "../Header/Header";
+import Navigation from "../Navigation/Navigation";
 
 function Landing() {
   return (
     <>
-      <header>header</header>
+      <Header isThemed={true}>
+        <Navigation />
+      </Header>
       <main>
         <Promo />
         <NavTab />

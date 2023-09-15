@@ -2,8 +2,8 @@ import AuthLinks from "../AuthLinks/AuthLinks";
 import Promo from "../main/Promo/Promo";
 import NavTab from "../main/NavTab/NavTab";
 import Student from "../Student/Student";
-import AboutProject from "../AboutProject/AboutProject";
-import Techs from "../Techs/Techs";
+import AboutProject from "../main/AboutProject/AboutProject";
+import Techs from "../main/Techs/Techs";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 

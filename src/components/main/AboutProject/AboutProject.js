@@ -1,5 +1,5 @@
 import "./AboutProject.css";
-import Article from "../Article/Article";
+import Article from "../../Article/Article";
 
 function AboutProject() {
   return (

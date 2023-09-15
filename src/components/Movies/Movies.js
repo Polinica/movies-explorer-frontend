@@ -1,6 +1,7 @@
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import Navigation from "../Navigation/Navigation";
+import SearchForm from "../SearchForm/SearchForm";
 import "./Movies.css";
 
 function Movies() {
@@ -9,7 +10,9 @@ function Movies() {
       <Header>
         <Navigation />
       </Header>
-      <main>Содержимое</main>
+      <main>
+        <SearchForm />
+      </main>
       <Footer />
     </>
   );

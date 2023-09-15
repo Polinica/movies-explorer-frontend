@@ -1,17 +1,27 @@
 import "./Header.css";
 import logo from "../../images/logo.svg";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import classNames from "classnames";
 
 function Header({ children, isThemed = false }) {
   return (
-    <header className={`header section${isThemed ? " header_themed" : ""}`}>
-      <Link className="header__main-link" to="/">
+    // <header className={`header section${isThemed ? " header_themed" : ""}`}>
+    <header
+      className={classNames("header", "section", { header_themed: isThemed })}
+    >
+      <NavLink
+        className="header__main-link"
+        to="/"
+        style={({ isActive }) => {
+          return isActive ? { "pointer-events": "none" } : {};
+        }}
+      >
         <img
           className="header__logo"
           alt="Логотип приложения: круг"
           src={logo}
         />
-      </Link>
+      </NavLink>
       {children}
     </header>
   );

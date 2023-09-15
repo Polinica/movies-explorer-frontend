@@ -1,7 +1,7 @@
 import "./Student.css";
 import Article from "../Article/Article";
-import AboutMe from "../AboutMe/AboutMe";
-import Portfolio from "../Portfolio/Portfolio";
+import AboutMe from "../main/AboutMe/AboutMe";
+import Portfolio from "../main/Portfolio/Portfolio";
 
 function Student() {
   return (

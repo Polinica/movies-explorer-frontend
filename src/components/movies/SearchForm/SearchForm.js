@@ -1,4 +1,4 @@
-import Checkbox from "../Checkbox/Checkbox";
+import Checkbox from "../FilterCheckbox/FilterCheckbox";
 import "./SearchForm.css";
 
 function SearchForm() {

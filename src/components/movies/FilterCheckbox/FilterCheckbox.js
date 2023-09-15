@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import "./Checkbox.css";
+import "./FilterCheckbox.css";
 
 function Checkbox({ className, title }) {
   return (

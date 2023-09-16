@@ -1,10 +1,10 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 
-function MoviesCardList() {
+function MoviesCardList({ type }) {
   return (
     <section className="movie-card-list section">
-      <MoviesCard />
+      <MoviesCard type={type} />
     </section>
   );
 }

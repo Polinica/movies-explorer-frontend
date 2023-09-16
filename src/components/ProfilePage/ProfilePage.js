@@ -1,6 +1,6 @@
-import Header from "../../Header/Header";
-import Navigation from "../../Navigation/Navigation";
-import Profile from "../../Profile/Profile";
+import Header from "../Header/Header";
+import Navigation from "../Navigation/Navigation";
+import Profile from "../Profile/Profile";
 
 function ProfilePage() {
   return (

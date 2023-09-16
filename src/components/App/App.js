@@ -1,8 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import Landing from "../Landing/Landing";
 import Movies from "../movies/Movies/Movies";
-import ProfilePage from "../movies/ProfilePage/ProfilePage";
+import ProfilePage from "../ProfilePage/ProfilePage";
 import SavedMovies from "../movies/SavedMovies/SavedMovies";
+import Auth from "../Auth/Auth";
 import Page404 from "../Page404/Page404";
 import "./App.css";
 
@@ -14,6 +15,8 @@ function App() {
         <Route path="/movies" element={<Movies />} />
         <Route path="/saved-movies" element={<SavedMovies />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/signup" element={<Auth />} />
+        <Route path="/signin" element={<Auth />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </div>

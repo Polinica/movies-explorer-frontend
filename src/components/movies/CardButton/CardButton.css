@@ -33,9 +33,11 @@
 
 .card-button_type_done {
   background-color: var(--movie-button-done);
-  background-image: url(../../../images/saved-icon.svg);
+  background-image: url(../../../images/icon__done.svg);
 }
+/* saved-icon.svg */
 
 .card-button_type_delete {
-  background-image: url(../../../images/del-icon.svg);
+  background-image: url(../../../images/icon__delete.svg);
 }
+/* del-icon.svg */

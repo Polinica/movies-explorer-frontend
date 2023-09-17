@@ -142,7 +142,7 @@
 }
 
 .navigation__close-button:active {
-  transform: scale(0);
+  transform: scale(0.);
 }
 
 @media (min-width: 768px) {

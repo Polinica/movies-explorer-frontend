@@ -11,9 +11,7 @@ function SearchForm() {
         required
       />
       <Checkbox title="Короткометражки" className="search-form__checkbox" />
-      <button type="submit" className="search-form__button">
-        Найти
-      </button>
+      <button type="submit" className="search-form__button"></button>
     </form>
   );
 }

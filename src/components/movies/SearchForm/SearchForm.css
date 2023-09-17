@@ -2,7 +2,7 @@
   padding-top: 75px;
   padding-bottom: 50px;
   display: grid;
-  row-gap: 40px;
+  row-gap: 43px;
   grid-template-columns: 1fr min-content;
   grid-template-areas:
     "input button"
@@ -13,7 +13,7 @@
   .search-form {
     padding-top: 67px;
     padding-bottom: 60px;
-    row-gap: 30px;
+    row-gap: 42px;
   }
 }
 
@@ -21,7 +21,7 @@
   .search-form {
     padding-top: 57px;
     padding-bottom: 47px;
-    row-gap: 32px;
+    row-gap: 42px;
   }
 }
 
@@ -29,22 +29,24 @@
   grid-area: input;
   grid-column: 1/-1;
   border: none;
-  border-bottom: 1px solid var(--background-variant-secondary);
+  /* border-bottom: 1px solid var(--background-variant-secondary); */
+  background-color: var(--movie-button);
+  border-radius: 40px;
   padding-block: 15px;
   transition: border-bottom-color 0.3s;
   padding-right: 60px; /* Space for input button */
   /* Текст */
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 13px;
   line-height: 1.22;
   color: var(--on-surface);
 }
 
 @media (min-width: 768px) {
   .search-form__input {
-    padding-block: 13px;
-    font-size: 28px;
+    padding-block: 14px;
+    font-size: 13px;
     line-height: 1.21;
   }
 }
@@ -63,7 +65,7 @@
   justify-self: center;
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .search-form__checkbox {
     justify-self: end;
   }
@@ -73,7 +75,7 @@
   .search-form__checkbox {
     justify-self: start;
   }
-}
+} */
 
 .search-form__button {
   /* Расположение */
@@ -88,10 +90,15 @@
   padding: 8px 10px;
   border-radius: 48px;
   /* Текст */
-  font-style: normal;
+  background-image: url(../../../images/icon__search.svg);
+  background-position: center;
+  background-size: 100% 100%;
+  width: 80px;
+  height: 34px;
+  /* font-style: normal;
   font-weight: 500;
   font-size: 11px;
-  line-height: 1.64;
+  line-height: 1.64; */
   /* Анимация */
   transition: opacity 0.3s, transform 0.3s;
 }

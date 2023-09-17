@@ -1,11 +1,33 @@
+import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 
+import testData from "../../../utils/testData";
+
 function MoviesCardList({ type }) {
+  const [movies, setMovies] = React.useState([]);
+
+  function testGetMovies() {
+    setMovies(testData);
+  }
+
+  React.useEffect(() => {
+    testGetMovies();
+  }, []);
+
   return (
-    <section className="movie-card-list section">
-      <MoviesCard type={type} />
-    </section>
+    <ul className="movie-card-list section" aria-label="Список фильмов">
+      {movies.map((movie) => {
+        return (
+          <MoviesCard
+            key={movie._id}
+            name={movie.name}
+            duration={movie.duration}
+            link={movie.link}
+          />
+        );
+      })}
+    </ul>
   );
 }
 

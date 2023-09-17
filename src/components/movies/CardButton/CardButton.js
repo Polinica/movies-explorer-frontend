@@ -4,9 +4,9 @@ import "./CardButton.css";
 function CardButton({ className, type, onClick }) {
   const TYPE_CONFIG = {
     save: {
-      text: "Сохранить",
+      text: "",
       className: "card-button_type_save",
-      alt: null,
+      alt: "поставить отметку с фильма",
     },
     done: {
       text: "",

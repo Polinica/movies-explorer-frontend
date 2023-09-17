@@ -264,14 +264,4 @@
     font-size: 14px;
     line-height: 1.14;
   }
-  .navigation_themed .navigation__link_type_account {
-    background-color: var(--promo-variant);
-  }
-}
-
-@media (min-width: 768px) {
-  .navigation__link_active.navigation__link_type_account {
-    text-decoration: none;
-    outline: 2px solid;
-  }
 }

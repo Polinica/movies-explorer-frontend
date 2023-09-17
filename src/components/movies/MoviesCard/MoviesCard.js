@@ -1,5 +1,4 @@
 import "./MoviesCard.css";
-
 import photo from "../../../images/IMG007.jpg";
 import CardButton from "../CardButton/CardButton";
 import React from "react";
@@ -11,9 +10,7 @@ function MoviesCard({ name, link, type }) {
   function handleClickSave() {
     setIsSaved((state) => !state);
   }
-
   const ref = React.useRef();
-
   function handleClickDelete() {
     setIsSaved(false);
     ref.current.remove();
@@ -59,5 +56,4 @@ function MoviesCard({ name, link, type }) {
     </li>
   );
 }
-
 export default MoviesCard;

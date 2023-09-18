@@ -67,18 +67,6 @@
   justify-self: center;
 }
 
-/* @media (min-width: 768px) {
-  .search-form__checkbox {
-    justify-self: end;
-  }
-}
-
-@media (min-width: 1280px) {
-  .search-form__checkbox {
-    justify-self: start;
-  }
-} */
-
 .search-form__button {
   /* Расположение */
   grid-area: button;
@@ -98,10 +86,6 @@
   background-size: 100% 100%;
   width: 80px;
   height: 34px;
-  /* font-style: normal;
-  font-weight: 500;
-  font-size: 11px;
-  line-height: 1.64; */
   /* Анимация */
   transition: opacity 0.3s, transform 0.3s;
 }

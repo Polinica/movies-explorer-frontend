@@ -2,7 +2,7 @@
   color: var(--on-surface);
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 769px) {
   .navigation {
     width: 100%;
   }
@@ -34,7 +34,7 @@
   transform: scale(0.9);
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 768px) {
   .navigation__open-button {
     display: none;
   }
@@ -64,7 +64,7 @@
   visibility: visible;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 769px) {
   .navigation__menu {
     /* Сброс мобильной версии */
     position: static;
@@ -105,7 +105,7 @@
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 769px) {
   .navigation__panel {
     /* Сброс мобильной версии */
     position: static;
@@ -152,7 +152,7 @@
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 768px) {
   .navigation__close-button {
     display: none;
   }
@@ -178,7 +178,7 @@
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 768px) {
   .navigation__list {
     /* Сброс мобильной версии */
     flex-direction: row;
@@ -190,14 +190,14 @@
   margin-top: auto;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 768px) {
   .navigation__list-item:last-child {
     margin-top: 0;
     margin-left: auto;
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 768px) {
   .navigation__list-item_type_main-page {
     display: none;
   }
@@ -222,7 +222,7 @@
   opacity: 0.8;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 768px) {
   .navigation__link {
     font-weight: 400;
     font-size: 13px;
@@ -236,7 +236,7 @@
   text-underline-offset: 11px;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 768px) {
   .navigation__link_active {
     text-decoration: none;
     font-weight: 500;

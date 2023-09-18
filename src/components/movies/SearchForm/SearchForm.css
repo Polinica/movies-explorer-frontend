@@ -44,6 +44,15 @@
   color: var(--on-surface);
 }
 
+.search-form__input .search__input__button:focus {
+  outline: 1.5px solid transparent;
+  border: 1.5px solid transparent;
+}
+
+.search-form__input:hover {
+  border: 1.5px solid #ff6838;
+}
+
 @media (min-width: 768px) {
   .search-form__input {
     /* padding-block: 14px; */

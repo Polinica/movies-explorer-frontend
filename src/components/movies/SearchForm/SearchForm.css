@@ -92,7 +92,8 @@
   /* Текст */
   background-image: url(../../../images/icon__search.svg);
   background-position: center;
-  background-size: 100% 100%;
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
   width: 80px;
   height: 34px;
   /* Анимация */

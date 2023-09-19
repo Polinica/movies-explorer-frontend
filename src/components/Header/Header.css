@@ -6,9 +6,15 @@
   gap: 44px;
 }
 
+/* @media (min-width: 768px) {
+  .header {
+    gap: 416px;
+  }
+} */
+
 @media (min-width: 768px) {
   .header {
-    gap: 426px;
+    gap: 38%;
   }
 }
 

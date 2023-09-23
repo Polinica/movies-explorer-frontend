@@ -4,7 +4,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 import moviesApi from "../../../utils/MoviesApi";
 
-import testData from "../../../utils/testData";
+// import testData from "../../../utils/testData";
 
 function MoviesCardList({ type }) {
   const [movies, setMovies] = React.useState([]);
@@ -28,7 +28,8 @@ function MoviesCardList({ type }) {
             key={movie._id}
             name={movie.name}
             duration={movie.duration}
-            link={movie.link}
+            // link={movie.link}
+            link={"https://api.nomoreparties.co/" + movie.image.url}
           />
         );
       })}

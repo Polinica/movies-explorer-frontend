@@ -2,8 +2,9 @@ import "./MoviesCard.css";
 import photo from "../../../images/IMG007.jpg";
 import CardButton from "../CardButton/CardButton";
 import React from "react";
+import getNumDeclination from "../../../utils/getNumDeclination";
 
-function MoviesCard({ name, link, type }) {
+function MoviesCard({ name, duration, thumbnail, type }) {
   // TESTING BUTTON CLICK
   const [isSaved, setIsSaved] = React.useState(false);
 
@@ -11,6 +12,7 @@ function MoviesCard({ name, link, type }) {
     setIsSaved((state) => !state);
   }
   const ref = React.useRef();
+
   function handleClickDelete() {
     setIsSaved(false);
     ref.current.remove();
@@ -19,7 +21,7 @@ function MoviesCard({ name, link, type }) {
   return (
     <li className="movie-card" ref={ref}>
       <img
-        src={link}
+        src={thumbnail}
         alt={`Кадр из фильма ${name}`}
         className="movie-card__thumbnail"
       />
@@ -50,7 +52,10 @@ function MoviesCard({ name, link, type }) {
           )}
         </div>
         <div className="cards__tex-row">
-          <p className="movie-card__duration">1ч42м</p>
+          <p className="movie-card__duration">{`${duration} ${getNumDeclination(
+            duration,
+            ["минута", "минуты", "минут"]
+          )}`}</p>
         </div>
       </div>
     </li>

@@ -14,7 +14,7 @@ function MoviesCardList({ type, movies }) {
             name={movie.nameRU}
             duration={movie.duration}
             // link={movie.link}
-            link={"https://api.nomoreparties.co/" + movie.image.url}
+            thumbnail={"https://api.nomoreparties.co/" + movie.image.url}
           />
         );
       })}

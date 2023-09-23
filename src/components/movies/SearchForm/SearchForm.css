@@ -72,6 +72,10 @@
   color: var(--on-surface-variant);
 }
 
+.search-form__input:disabled {
+  background-color: inherit;
+}
+
 .search-form__input_invalid,
 .search-form__input_invalid:focus {
   border-bottom-color: var(--error);
@@ -137,4 +141,13 @@
 
 .search-form__button:active {
   transform: scale(0.9);
+}
+
+.search-form__button:disabled {
+  pointer-events: none;
+  color: transparent;
+  background-image: url(../../../images/icon__loading.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px auto;
 }

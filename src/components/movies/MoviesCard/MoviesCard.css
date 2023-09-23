@@ -1,0 +1,87 @@
+.movie-card {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 768px) {
+  .movie-card {
+    --gap: 18px;
+  }
+}
+
+
+.cards__text {
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cards__tex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.movie-card__name {
+  font-size: 13px;
+  line-height: 16px;
+  color: #000;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  width: calc(100% - 30px);
+}
+
+@media (min-width: 768px) {
+  .movie-card__name {
+    font-size: 13px;
+    line-height: normal;
+  }
+}
+
+.movie-card__duration {
+  grid-area: duration;
+  margin: 0;
+  margin-right: var(--gap);
+  /* Текст */
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.8;
+  color: var(--on-card-variant);
+}
+
+@media (min-width: 768px) {
+  .movie-card__duration {
+    font-size: 11px;
+    line-height: normal;
+  }
+}
+
+.movie-card__thumbnail {
+  grid-area: thumbnail;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-position: center;
+  object-fit: cover;
+}
+
+
+@media (min-width: 1280px) {
+  .movie-card__thumbnail {
+    height: 151px;
+    width: 270px;
+  }
+}
+
+.movie-card__button {
+  grid-area: button;
+  justify-self: center;
+}

@@ -1,0 +1,30 @@
+.more {
+  padding-top: 50px;
+  padding-bottom: 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.more__button {
+  /* Сброс */
+  display: block;
+  border: none;
+  cursor: pointer;
+  /* Внешний вид */
+  background-color: var(--movie-button);
+  border-radius: 6px;
+  /* min-width: 240px; */
+  width: 100%;
+  padding: 10px 20px;
+  /* Анимация */
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+
+.more__button:active {
+  transform: scale(0.9);
+}
+
+.more__button:hover {
+  opacity: 0.8;
+}

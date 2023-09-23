@@ -1,0 +1,116 @@
+.card-button {
+  position: relative;
+  display: inline-block;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  border: #ffffff;
+}
+
+/* .card-button {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  height: 16px;
+  width: 16px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  border: #ffffff;
+} */
+
+.card-button:active {
+  transform: scale(0.9);
+}
+.card-button:hover {
+  opacity: 0.8;
+}
+
+.card-button_type_save {
+  background-color: #ffffff;
+  width: 16px;
+  height: 16px;
+  background-position: center;
+  background-size: 100% 100%;
+  padding: 0 0;
+  box-shadow: 0px 4px 4px rgba(50, 50, 71, 0.08),
+    0px 4px 8px rgba(50, 50, 71, 0.06);
+}
+
+.card-button_type_save:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 2px;
+  background-color: #f9f9f9;
+  bottom: 2px;
+
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* .card-button_type_save {
+  background-image: url(../../../images/saved-icon.svg);
+  width: 16px;
+  height: 16px;
+  background-position: center;
+  background-size: 100% 100%;
+  padding: 0 0;
+  box-shadow: 0px 4px 4px rgba(50, 50, 71, 0.08), 0px 4px 8px rgba(50, 50, 71, 0.06);
+} */
+
+.card-button_type_done {
+  background-color: var(--movie-button-done);
+  width: 16px;
+  height: 16px;
+  transition: 0.4s;
+  box-shadow: 0px 4px 4px rgba(50, 50, 71, 0.08),
+    0px 4px 8px rgba(50, 50, 71, 0.06);
+  background-color: white;
+}
+
+.card-button_type_done:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 2px;
+  background-color: #2be080;
+  bottom: 2px;
+
+  transition: 0.4s;
+  border-radius: 50%;
+}
+/* .card-button_type_done {
+  background-color: var(--movie-button-done);
+  background-image: url(../../../images/save-icon.svg);
+  background-position: center;
+  background-size: 100% 100%;
+  width: 16px;
+  height: 16px;
+  padding: 0 0;
+} */
+/* saved-icon.svg */
+
+/* .card-button_type_delete {
+  background-image: url(../../../images/icon__delete.svg);
+  background-position: center;
+  background-size: 100% 100%;
+  width: 16px;
+  height: 16px;
+  padding: 0 0;
+} */
+/* del-icon.svg */
+
+.card-button_type_delete {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  background-image: url(../../../images/icon__delete.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+}

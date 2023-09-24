@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "../../Footer/Footer";
 import Header from "../../Header/Header";
-import Navigation from "../../Navigation/Navigation";
+// import Navigation from "../../Navigation/Navigation";
 // import MoviesCardList from "../MoviesCardList/MoviesCardList";
 // import Preloader from "../../Preloader/Preloader";
 import SearchForm from "../SearchForm/SearchForm";
@@ -121,9 +121,7 @@ function Movies() {
   }, [searchText, areShortiesSeleted, allMovies]);
   return (
     <>
-      <Header>
-        <Navigation />
-      </Header>
+      <Header />
       <main aria-label="Поиск фильмов">
         <SearchForm
           onSubmit={handleSearchFormSubmit}

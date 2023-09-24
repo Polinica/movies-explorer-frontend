@@ -12,17 +12,24 @@ import React from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function App() {
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState(null);
+
+  async function handleRegister({ email, password }) {
+    console.log("registered");
+  }
+
   return (
-    <CurrentUserContext.Provider user={currentUser}>
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="content">
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/movies" element={<Movies />} />
           <Route path="/saved-movies" element={<SavedMovies />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/signup" element={<Register />} />
+          <Route
+            path="/signup"
+            element={<Register onRegister={handleRegister} />}
+          />
           <Route path="/signin" element={<Login />} />
           <Route path="*" element={<Page404 />} />
         </Routes>

@@ -1,5 +1,6 @@
 import React from "react";
 import "./Profile.css";
+import SubmitButton from "../user/SubmitButton/SubmitButton";
 
 function Profile() {
   const [isInEditMode, setIsInEditMode] = React.useState(true);
@@ -42,13 +43,14 @@ function Profile() {
               <p className="profile__error-message">
                 При обновлении профиля произошла ошибка.
               </p>
-              <button
-                className="input__submit-button"
+              <SubmitButton
+                //className="input__submit-button"
                 onClick={switchEditMode}
-                type="submit"
+                // type="submit"
+                title="Сохранить"
               >
                 Сохранить
-              </button>
+              </SubmitButton>
             </>
           )}
         </form>

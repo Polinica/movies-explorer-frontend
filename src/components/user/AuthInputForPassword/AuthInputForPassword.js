@@ -1,14 +1,14 @@
 import AuthInput from "../AuthInput/AuthInput";
 
-function AuthInputForPassword() {
+function AuthInputForPassword({ ...validationParams }) {
   return (
     <AuthInput
       label="Пароль"
-      params={{
-        type: "password",
-        name: "password",
-        required: true,
-      }}
+      type="password"
+      name="password"
+      required={true}
+      placeholder="akagi"
+      {...validationParams}
     />
   );
 }

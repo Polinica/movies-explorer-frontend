@@ -1,14 +1,14 @@
 import AuthInput from "../AuthInput/AuthInput";
 
-function AuthInputForEmail() {
+function AuthInputForEmail({ ...validationParams }) {
   return (
     <AuthInput
       label="E-mail"
-      params={{
-        type: "email",
-        name: "email",
-        required: true,
-      }}
+      type="email"
+      name="email"
+      required={true}
+      placeholder="dl@dl.com"
+      {...validationParams}
     />
   );
 }

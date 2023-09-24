@@ -121,12 +121,17 @@
   transition: border 0.3s;
 }
 
+.auth__input_type_error,
+.auth__input_type_error:focus {
+  color: var(--error);
+}
+
 .auth__input:focus {
   outline: none;
   border: 1px solid var(--primary);
 }
 
-.auth__error {
+.auth__input-error {
   margin: 0;
   margin-block: 10px;
   font-style: normal;
@@ -136,36 +141,22 @@
   color: var(--error);
 }
 
-.auth__submit-button {
+.auth__input-error::before {
+  content: "";
+  height: 1em;
+  display: inline-block;
+}
+
+.auth__request-error {
+  margin: 0;
+  margin-bottom: 10px;
   margin-top: auto;
-  cursor: pointer;
-  border: none;
-  background-color: var(--secondary);
-  border-radius: 3px;
-  padding: 15px;
-  /* Текст */
-  color: var(--on-secondary);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 1.25;
   text-align: center;
-  /* Анимация */
-  transition: opacity.3s, transform 0.3s;
-}
-
-.auth__submit-button:hover {
-  opacity: 0.8;
-}
-
-.auth__submit-button:active {
-  transform: scale(0.9);
-}
-
-.auth__submit-button:disabled {
-  background-color: var(--button-disabled);
-  color: var(--on-button-disabled);
-  pointer-events: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.2;
+  color: var(--error);
 }
 
 .auth__hint {

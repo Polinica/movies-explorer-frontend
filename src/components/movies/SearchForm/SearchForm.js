@@ -16,7 +16,7 @@ function SearchForm({
   };
   const form = React.useRef();
   const [inputValues, setInputValues] = React.useState(defaultValues);
-  const [isValid, setIsValid] = React.useState(false);
+  const [isValid, setIsValid] = React.useState(true);
   const [isErrorShown, setIsErrorShown] = React.useState(false);
   const [errorText, setErrorText] = React.useState("");
 
@@ -37,6 +37,10 @@ function SearchForm({
   function validateForm() {
     setIsValid(form.current.checkValidity());
   }
+
+  React.useEffect(() => {
+    validateForm();
+  }, []);
 
   React.useEffect(() => {
     if (isValid) {

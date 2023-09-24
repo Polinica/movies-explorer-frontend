@@ -109,10 +109,8 @@ function Movies() {
           />
         ) : isLoading ? (
           <Preloader />
-        ) : foundMovies.length ? (
+        ) : searchText ? (
           <MoviesCardList type="all" movies={foundMovies} />
-        ) : allMovies ? (
-          <Message text="Ничего не&nbsp;найдено" />
         ) : (
           false
         )}

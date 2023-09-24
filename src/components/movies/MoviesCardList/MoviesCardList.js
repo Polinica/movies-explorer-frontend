@@ -4,10 +4,15 @@ import "./MoviesCardList.css";
 import More from "../More/More";
 import { CARDS_RENDER_COUNT } from "../../../utils/config";
 import countGridColumns from "../../../utils/countGridColumns";
-import Message from "../Message/Message";
+// import Message from "../Message/Message";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({ type, movies }) {
+function MoviesCardList({
+  movies,
+  savedMovies,
+  onCardClick,
+  isSavedMoviesCardList = false,
+}) {
   const [renderedMovies, setRenderedMovies] = React.useState([]);
   const grid = React.useRef();
 
@@ -32,27 +37,31 @@ function MoviesCardList({ type, movies }) {
     const array = movies.slice(0, renderedCountFixed + moreCardsCount);
     setRenderedMovies(array);
   }
+
+  function checkIsMovieSaved(movieId) {
+    return savedMovies.some((savedMovie) => savedMovie.id === movieId);
+  }
+
   return (
     <>
-      {movies.length === 0 ? (
-        <Message text="Ничего не найдено" />
-      ) : (
-        <ul
-          className="movie-card-list section"
-          aria-label="Список фильмов"
-          ref={grid}
-        >
-          {renderedMovies.map((movie) => {
-            return (
-              <MoviesCard
-                key={movie.id}
-                movieData={movie}
-                type={type}
-              />
-            );
-          })}
-        </ul>
-      )}
+      <ul
+        className="movie-card-list section"
+        aria-label="Список фильмов"
+        ref={grid}
+      >
+        {renderedMovies.map((movie) => {
+          return (
+            <MoviesCard
+              key={movie.id}
+              movieData={movie}
+              isSaved={checkIsMovieSaved(movie.id)}
+              onClick={onCardClick}
+              isSavedMovieCard={isSavedMoviesCardList}
+            />
+          );
+        })}
+      </ul>
+
       {renderedMovies.length < movies.length && (
         <More onClick={handleMoreClick} />
       )}

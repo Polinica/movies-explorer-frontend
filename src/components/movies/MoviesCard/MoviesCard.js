@@ -1,27 +1,18 @@
 import "./MoviesCard.css";
-import CardButton from "../CardButton/CardButton";
+// import CardButton from "../CardButton/CardButton";
 import React from "react";
 import getNumDeclination from "../../../utils/getNumDeclination";
 import { MOVIE_API } from "../../../utils/config";
+import GeneralCardButton from "../GeneralCardButton/GeneralCardButton";
+import SavedCardButton from "../SavedCardButton/SavedCardButton";
 
-function MoviesCard({ movieData, children }) {
-  // TESTING BUTTON CLICK
-  const [isSaved, setIsSaved] = React.useState(false);
-
-  const type = "all";
-
-  function handleClickSave() {
-    setIsSaved((state) => !state);
-  }
-  const ref = React.useRef();
-
-  function handleClickDelete() {
-    setIsSaved(false);
-    ref.current.remove();
+function MoviesCard({ movieData, isSaved, onClick, isSavedMovieCard = false }) {
+  function handleClick() {
+    onClick(movieData.id);
   }
 
   return (
-    <li className="movie-card" ref={ref}>
+    <li className="movie-card">
       <img
         src={MOVIE_API.MEDIA_BASE_URL + movieData.image.url}
         alt={`Кадр из фильма ${movieData.name}`}
@@ -29,28 +20,12 @@ function MoviesCard({ movieData, children }) {
       />
       <div className="cards__text">
         <div className="cards__tex-row">
-          <h3 className="movie-card__name">{movieData.name}</h3>
+          <h3 className="movie-card__name">{movieData.nameRU}</h3>
 
-          {type === "all" ? (
-            isSaved ? (
-              <CardButton
-                className="movie-card__button"
-                type="done"
-                onClick={handleClickSave}
-              />
-            ) : (
-              <CardButton
-                className="movie-card__button"
-                type="save"
-                onClick={handleClickSave}
-              />
-            )
+          {isSavedMovieCard ? (
+            <SavedCardButton onClick={handleClick} />
           ) : (
-            <CardButton
-              className="movie-card__button"
-              type="delete"
-              onClick={handleClickDelete}
-            />
+            <GeneralCardButton isSaved={isSaved} onClick={handleClick} />
           )}
         </div>
         <div className="cards__tex-row">

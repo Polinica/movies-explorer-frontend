@@ -2,14 +2,15 @@ import React from "react";
 import Footer from "../../Footer/Footer";
 import Header from "../../Header/Header";
 import Navigation from "../../Navigation/Navigation";
-import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import Preloader from "../../Preloader/Preloader";
+// import MoviesCardList from "../MoviesCardList/MoviesCardList";
+// import Preloader from "../../Preloader/Preloader";
 import SearchForm from "../SearchForm/SearchForm";
 // import More from "../More/More";
 import "./Movies.css";
 import moviesApi from "../../../utils/MoviesApi";
 import searchMovies from "../../../utils/searchMovies";
-import Message from "../Message/Message";
+// import Message from "../Message/Message";
+import SearchResults from "../SearchResults/SearchResults";
 
 function Movies() {
   // Значения параметров поиска при загрузке
@@ -28,6 +29,9 @@ function Movies() {
 
   // Данные обо всех фильмах из API
   const [allMovies, setAllMovies] = React.useState(null);
+
+  // Сохраненные фильмы
+  const [savedMovies, setSavedMovies] = React.useState([]);
 
   // Служебные сообщения
 
@@ -56,27 +60,53 @@ function Movies() {
   // Запрос к API
   async function getMovies() {
     setIsErrorOnLoading(false);
+    setIsLoading(true);
     try {
       const movies = await moviesApi.getMovies();
       setAllMovies(movies);
     } catch {
       setIsErrorOnLoading(true);
     }
+    setIsLoading(false);
   }
 
   // Действия формы
-  async function handleSearchFormSubmit({ searchText, areShortiesSeleted }) {
-    if (!allMovies) {
-      setIsLoading(true);
-      await getMovies();
-      setIsLoading(false);
-    }
+  function handleSearchFormSubmit({ searchText, areShortiesSeleted }) {
+    // if (!allMovies) {
+    //   setIsLoading(true);
+    //   await getMovies();
+    //   setIsLoading(false);
+    // }
     setAreShortiesSeleted(areShortiesSeleted);
     setSearchText(searchText);
+    if (!allMovies) getMovies();
   }
 
   function handleCheckboxChange(value) {
     setAreShortiesSeleted(value);
+    if (!allMovies) getMovies();
+  }
+
+  // Сохранение фильмов
+  function handleCardClick(movieId) {
+    const isSaved = savedMovies.some((savedMovie) => savedMovie.id === movieId);
+    if (isSaved) {
+      deleteSavedMovie(movieId);
+    } else {
+      addSavedMovie(movieId);
+    }
+    console.log(savedMovies);
+  }
+
+  function deleteSavedMovie(movieId) {
+    setSavedMovies((movies) => movies.filter((movie) => movie.id !== movieId));
+  }
+
+  function addSavedMovie(movieId) {
+    setSavedMovies((movies) => [
+      ...movies,
+      allMovies.find((movie) => movie.id === movieId),
+    ]);
   }
 
   React.useEffect(() => {
@@ -102,17 +132,14 @@ function Movies() {
           defaultSearchText={searchText}
           defaultAreShortiesSeleted={areShortiesSeleted}
         />
-        {isErrorOnLoading ? (
-          <Message
-            text="Во&nbsp;время запроса произошла ошибка. Возможно, проблема с&nbsp;соединением или сервер недоступен. Подождите немного и&nbsp;попробуйте ещё раз"
-            isError
+        {searchText && (
+          <SearchResults
+            isErrorOnLoading={isErrorOnLoading}
+            isLoading={isLoading}
+            movies={foundMovies}
+            savedMovies={savedMovies}
+            onCardClick={handleCardClick}
           />
-        ) : isLoading ? (
-          <Preloader />
-        ) : searchText ? (
-          <MoviesCardList type="all" movies={foundMovies} />
-        ) : (
-          false
         )}
         {/* <Preloader /> */}
       </main>

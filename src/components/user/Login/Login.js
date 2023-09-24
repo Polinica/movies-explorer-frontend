@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import useForm from "../../../utils/hooks/useFormWithValidation";
 import Auth from "../../Auth/Auth";
 import AuthInputForEmail from "../AuthInputForEmail/AuthInputForEmail";
 import AuthInputForPassword from "../AuthInputForPassword/AuthInputForPassword";
@@ -14,10 +15,21 @@ function Login() {
     </p>
   );
   const BUTTON_TEXT = "Войти";
+
+  const [values, errors, isValid, handleChange] = useForm();
+
   return (
-    <Auth mode="register" title={TITLE} hint={HINT} buttonText={BUTTON_TEXT}>
-      <AuthInputForEmail />
-      <AuthInputForPassword />
+    <Auth title={TITLE} hint={HINT} buttonText={BUTTON_TEXT} isValid={isValid}>
+      <AuthInputForEmail
+        value={values.email}
+        error={errors.email}
+        onChange={handleChange}
+      />
+      <AuthInputForPassword
+        value={values.password}
+        error={errors.password}
+        onChange={handleChange}
+      />
     </Auth>
   );
 }

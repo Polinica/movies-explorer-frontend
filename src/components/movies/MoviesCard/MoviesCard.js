@@ -13,11 +13,18 @@ function MoviesCard({ movie, isSaved, onClick, isSavedMovieCard = false }) {
 
   return (
     <li className="movie-card">
-      <img
-        src={movie.image}
-        alt={`Кадр из фильма ${movie.nameRU}`}
-        className="movie-card__thumbnail"
-      />
+      <a
+        href={movie.trailerLink}
+        className="movie-card__link"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img
+          src={movie.image}
+          alt={`Кадр из фильма ${movie.nameRU}`}
+          className="movie-card__thumbnail"
+        />
+      </a>
       <div className="cards__text">
         <div className="cards__tex-row">
           <h3 className="movie-card__name">{movie.nameRU}</h3>

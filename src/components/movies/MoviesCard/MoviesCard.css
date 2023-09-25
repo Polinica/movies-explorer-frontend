@@ -15,7 +15,6 @@
   }
 }
 
-
 .cards__text {
   padding: 14px 12px;
   display: flex;
@@ -65,6 +64,15 @@
   }
 }
 
+.movie-card__link {
+  grid-area: thumbnail;
+  transition: opacity 0.3s;
+}
+
+.movie-card__link:hover {
+  opacity: 0.8;
+}
+
 .movie-card__thumbnail {
   grid-area: thumbnail;
   width: 100%;
@@ -72,7 +80,6 @@
   object-position: center;
   object-fit: cover;
 }
-
 
 @media (min-width: 1280px) {
   .movie-card__thumbnail {

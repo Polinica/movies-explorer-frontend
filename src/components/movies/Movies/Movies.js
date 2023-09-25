@@ -1,16 +1,11 @@
 import React from "react";
 import Footer from "../../Footer/Footer";
 import Header from "../../Header/Header";
-// import Navigation from "../../Navigation/Navigation";
-// import MoviesCardList from "../MoviesCardList/MoviesCardList";
-// import Preloader from "../../Preloader/Preloader";
 import SearchForm from "../SearchForm/SearchForm";
-// import More from "../More/More";
 import "./Movies.css";
 import moviesApi from "../../../utils/MoviesApi";
 import mainApi from "../../../utils/MainApi";
 import searchMovies from "../../../utils/searchMovies";
-// import Message from "../Message/Message";
 import SearchResults from "../SearchResults/SearchResults";
 import formatMovies from "../../../utils/formatMovies";
 
@@ -141,17 +136,6 @@ function Movies() {
     }
   }
 
-  //Поиск фильмов
-  React.useEffect(() => {
-    if (allMovies) {
-      const foundMovies = searchMovies(
-        allMovies,
-        searchText,
-        areShortiesSeleted
-      );
-      setFoundMovies(foundMovies);
-    }
-  }, [searchText, areShortiesSeleted, allMovies]);
   return (
     <>
       <Header />

@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 
-export default function useForm() {
-  const [values, setValues] = React.useState({});
+export default function useForm(initialValues = {}) {
+  const [values, setValues] = React.useState(initialValues);
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
 
   function handleChange(event) {
     const input = event.target;
     const name = input.name;
-    const value = input.type === 'checkbox' ? input.checked : input.value;
+    const value = input.type === "checkbox" ? input.checked : input.value;
     setValues((values) => ({ ...values, [name]: value }));
     setErrors((errors) => ({ ...errors, [name]: input.validationMessage }));
-    setIsValid(input.closest('form').checkValidity());
+    setIsValid(input.closest("form").checkValidity());
   }
 
   return [values, errors, isValid, handleChange];

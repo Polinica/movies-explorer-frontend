@@ -2,8 +2,9 @@ import classNames from "classnames";
 import React from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { REQUEST_ERRORS } from "../../utils/config";
+import useFilledForm from "../../utils/hooks/useFormWithValidationForProfile";
 import mainApi from "../../utils/MainApi";
-import useForm from "../../utils/hooks/useFormWithValidation";
+import useForm from "../../utils/hooks/useForm";
 import Header from "../Header/Header";
 import "./Profile.css";
 import SubmitButton from "../user/SubmitButton/SubmitButton";
@@ -11,7 +12,7 @@ import SubmitButton from "../user/SubmitButton/SubmitButton";
 function Profile({ onLogout, onUpdate }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [isInEditMode, setIsInEditMode] = React.useState(false);
-  const [values, errors, isValid, handleChange] = useForm(currentUser);
+  const [values, errors, isValid, handleChange] = useFilledForm(currentUser);
   const [requestError, setRequestError] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSuccussMessageShown, setIsSuccussMessageShown] =
@@ -24,16 +25,16 @@ function Profile({ onLogout, onUpdate }) {
     setIsInEditMode((state) => !state);
   }
 
-  React.useEffect(() => {
-    if (
-      values.name === currentUser.name &&
-      values.email === currentUser.email
-    ) {
-      setAreSameValues(true);
-      return;
-    }
-    setAreSameValues(false);
-  }, [values, currentUser]);
+  // React.useEffect(() => {
+  //   if (
+  //     values.name === currentUser.name &&
+  //     values.email === currentUser.email
+  //   ) {
+  //     setAreSameValues(true);
+  //     return;
+  //   }
+  //   setAreSameValues(false);
+  // }, [values, currentUser]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -118,7 +119,7 @@ function Profile({ onLogout, onUpdate }) {
                   // onClick={switchEditMode}
                   // type="submit"
                   title="Сохранить"
-                  isDisabled={!isValid || areSameValues}
+                  isDisabled={!isValid}
                   isLoading={isLoading}
                 >
                   Сохранить

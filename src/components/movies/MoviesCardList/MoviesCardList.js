@@ -38,8 +38,10 @@ function MoviesCardList({
     setRenderedMovies(array);
   }
 
-  function checkIsMovieSaved(movieId) {
-    return savedMovies.some((savedMovie) => savedMovie.id === movieId);
+  function checkIsMovieSaved(movie) {
+    return savedMovies.some(
+      (savedMovie) => savedMovie.movieId === movie.movieId
+    );
   }
 
   return (
@@ -52,9 +54,9 @@ function MoviesCardList({
         {renderedMovies.map((movie) => {
           return (
             <MoviesCard
-              key={movie.id}
-              movieData={movie}
-              isSaved={checkIsMovieSaved(movie.id)}
+              key={movie.movieId}
+              movie={movie}
+              isSaved={checkIsMovieSaved(movie)}
               onClick={onCardClick}
               isSavedMovieCard={isSavedMoviesCardList}
             />

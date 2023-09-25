@@ -3,13 +3,12 @@ import { Navigate } from "react-router-dom";
 import CurrentUserContext from "../../../contexts/CurrentUserContext";
 import Preloader from "../../Preloader/Preloader";
 
-function ProtectedRoute({ children, isLoading }) {
+function AnonymousRoute({ children, isLoading }) {
   const currentUser = React.useContext(CurrentUserContext);
 
   if (isLoading) return <Preloader />;
-  if (!currentUser) return <Navigate to="/" />;
-
+  if (currentUser) return <Navigate to="/movies" />;
   return children;
 }
 
-export default ProtectedRoute;
+export default AnonymousRoute;

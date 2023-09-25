@@ -13,37 +13,44 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
 import Profile from "../Profile/Profile";
 import ProtectedRoute from "../user/ProtectedRoute/ProtectedRoute";
+import AnonymousRoute from "../user/AnonymousRoute/AnonymousRoute";
 
 function App() {
-  const [currentUser, setCurrentUser] = React.useState(null);
+  const [currentUser, setCurrentUser] = React.useState();
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const navigate = useNavigate();
 
   // Авторизация при открытии страницы по сохраненному логину
   React.useEffect(() => {
+    checkToken();
+  }, []);
+
+  async function checkToken() {
+    setIsLoading(true);
     const token = localStorage.getItem("token");
     if (token) {
-      mainApi
-        .checkToken(token)
-        .then((res) => {
-          mainApi.setToken(token);
-          setCurrentUser(res);
-        })
-        .catch((err) => {
-          localStorage.removeItem("token");
-          localStorage.removeItem("searchText");
-          localStorage.removeItem("areShortiesSelected");
-          localStorage.removeItem("foundMovies");
-          setCurrentUser(null);
-          console.error(err);
-        });
+      try {
+        const res = await mainApi.checkToken(token);
+        mainApi.setToken(token);
+        setCurrentUser(res);
+      } catch (err) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("searchText");
+        localStorage.removeItem("areShortiesSelected");
+        localStorage.removeItem("foundMovies");
+        setCurrentUser(null);
+        console.error(err);
+      }
     }
-  }, [navigate]);
+    setIsLoading(false);
+  }
 
   async function handleLogin({ token }) {
     localStorage.setItem("token", token);
     mainApi.setToken(token);
     setCurrentUser({});
+    checkToken(token);
     navigate("/movies");
   }
 
@@ -68,7 +75,7 @@ function App() {
           <Route
             path="/movies"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isLoading={isLoading}>
                 <Movies />
               </ProtectedRoute>
             }
@@ -76,7 +83,7 @@ function App() {
           <Route
             path="/saved-movies"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isLoading={isLoading}>
                 <SavedMovies />
               </ProtectedRoute>
             }
@@ -84,7 +91,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isLoading={isLoading}>
                 <Profile
                   onLogout={handleLogOut}
                   onUpdate={handleUpdateUserInfo}
@@ -92,8 +99,22 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/signup" element={<Register onLogin={handleLogin} />} />
-          <Route path="/signin" element={<Login onLogin={handleLogin} />} />
+          <Route
+            path="/signup"
+            element={
+              <AnonymousRoute isLoading={isLoading}>
+                <Register onLogin={handleLogin} />
+              </AnonymousRoute>
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              <AnonymousRoute isLoading={isLoading}>
+                <Login onLogin={handleLogin} />
+              </AnonymousRoute>
+            }
+          />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </div>

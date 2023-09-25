@@ -78,6 +78,7 @@ function Profile({ onLogout, onUpdate }) {
                 required={true}
                 value={values.name ?? ""}
                 onChange={handleChange}
+                disabled={isLoading}
                 {...(!isInEditMode ? { disabled: true } : {})}
               />
             </label>
@@ -92,6 +93,7 @@ function Profile({ onLogout, onUpdate }) {
                 required={true}
                 value={values.email ?? ""}
                 onChange={handleChange}
+                disabled={isLoading}
                 {...(!isInEditMode ? { disabled: true } : {})}
               />
             </label>

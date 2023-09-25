@@ -110,7 +110,7 @@ function Movies() {
     try {
       await mainApi.deleteMovie(movie._id);
       setSavedMovies((movies) =>
-        movies.filter((savedMovie) => savedMovie.id !== movie._id)
+        movies.filter((savedMovie) => savedMovie._id !== movie._id)
       );
     } catch (err) {
       console.error(err);

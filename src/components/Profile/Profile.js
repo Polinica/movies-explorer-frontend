@@ -4,7 +4,6 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { REQUEST_ERRORS } from "../../utils/config";
 import useFilledForm from "../../utils/hooks/useFormWithValidationForProfile";
 import mainApi from "../../utils/MainApi";
-import useForm from "../../utils/hooks/useForm";
 import Header from "../Header/Header";
 import "./Profile.css";
 import SubmitButton from "../user/SubmitButton/SubmitButton";
@@ -18,7 +17,7 @@ function Profile({ onLogout, onUpdate }) {
   const [isSuccussMessageShown, setIsSuccussMessageShown] =
     React.useState(false);
 
-  const [areSameValues, setAreSameValues] = React.useState(true);
+  // const [areSameValues, setAreSameValues] = React.useState(true);
   // const [isInEditMode, setIsInEditMode] = React.useState(true);
 
   function switchEditMode() {

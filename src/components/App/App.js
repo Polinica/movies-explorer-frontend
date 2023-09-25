@@ -12,13 +12,14 @@ import React from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
 import Profile from "../Profile/Profile";
+import ProtectedRoute from "../user/ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState(null);
 
   const navigate = useNavigate();
 
-  // Авторизация при открытии страницы
+  // Авторизация при открытии страницы по сохраненному логину
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -30,6 +31,9 @@ function App() {
         })
         .catch((err) => {
           localStorage.removeItem("token");
+          localStorage.removeItem("searchText");
+          localStorage.removeItem("areShortiesSelected");
+          localStorage.removeItem("foundMovies");
           setCurrentUser(null);
           console.error(err);
         });
@@ -37,17 +41,17 @@ function App() {
   }, [navigate]);
 
   async function handleLogin({ token }) {
-    if (token) {
-      localStorage.setItem("token", token);
-      mainApi.setToken(token);
-      const user = await mainApi.getUserInfo();
-      setCurrentUser(user);
-      navigate("/movies");
-    }
+    localStorage.setItem("token", token);
+    mainApi.setToken(token);
+    setCurrentUser({});
+    navigate("/movies");
   }
 
   function handleLogOut() {
     localStorage.removeItem("token");
+    localStorage.removeItem("searchText");
+    localStorage.removeItem("areShortiesSelected");
+    localStorage.removeItem("foundMovies");
     setCurrentUser(null);
     navigate("/");
   }
@@ -57,16 +61,31 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/saved-movies" element={<SavedMovies />} />
+          <Route
+            path="/movies"
+            element={
+              <ProtectedRoute>
+                <Movies />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/saved-movies"
+            element={
+              <ProtectedRoute>
+                <SavedMovies />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/profile"
-            element={<Profile onLogout={handleLogOut} />}
+            element={
+              <ProtectedRoute>
+                <Profile onLogout={handleLogOut} />
+              </ProtectedRoute>
+            }
           />
-          <Route
-            path="/signup"
-            element={<Register onRegister={handleLogin} />}
-          />
+          <Route path="/signup" element={<Register onLogin={handleLogin} />} />
           <Route path="/signin" element={<Login onLogin={handleLogin} />} />
           <Route path="*" element={<Page404 />} />
         </Routes>

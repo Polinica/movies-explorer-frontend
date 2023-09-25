@@ -1,8 +1,8 @@
 import "./MoviesCard.css";
 // import CardButton from "../CardButton/CardButton";
 import React from "react";
-import getNumDeclination from "../../../utils/getNumDeclination";
 // import { MOVIE_API } from "../../../utils/config";
+import formatMovieDuration from "../../../utils/formatMovieDuration";
 import GeneralCardButton from "../GeneralCardButton/GeneralCardButton";
 import SavedCardButton from "../SavedCardButton/SavedCardButton";
 
@@ -36,13 +36,9 @@ function MoviesCard({ movie, isSaved, onClick, isSavedMovieCard = false }) {
           )}
         </div>
         <div className="cards__tex-row">
-          <p className="movie-card__duration">{`${
-            movie.duration
-          } ${getNumDeclination(movie.duration, [
-            "минута",
-            "минуты",
-            "минут",
-          ])}`}</p>
+          <p className="movie-card__duration">
+            {formatMovieDuration(movie.duration)}
+          </p>
         </div>
       </div>
     </li>

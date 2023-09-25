@@ -16,7 +16,7 @@ function SavedMovies() {
 
   const [foundMovies, setFoundMovies] = React.useState([]);
   const [searchText, setSearchText] = React.useState("");
-  const [areShortiesSeleted, setAreShortiesSeleted] = React.useState(true);
+  const [areShortiesSeleted, setAreShortiesSeleted] = React.useState(false);
 
   React.useEffect(() => {
     getSavedMovies();

@@ -15,7 +15,7 @@ https://polinica.github.io/movies-explorer-frontend/
 Полностью приложение состоит из двух частей:
 
 1. [movies-explorer (бэкенд-часть)](https://github.com/Polinica/movies-explorer-api)
-2. movies-explorer (фронтенд-часть) ⬅ _этот репозиторий_
+2. movies-explorer (фронтенд-часть) ⬅ _этот репозиторий_ / `https://pika.nomoredomainsicu.ru`
 
 ## Макет в Figma
 
@@ -29,8 +29,8 @@ https://polinica.github.io/movies-explorer-frontend/
 ### Используемые API
 
 - собственное API для регистрации/авторизации и хранения сохраненных фильмов:
-  `---`
-- публичное API для получения коллекции фильмов BeatFilm `----`
+  `https://api.pika.nomoredomainsicu.ru`
+- публичное API для получения коллекции фильмов BeatFilm `https://api.nomoreparties.co`
 
 ## Функциональность
 

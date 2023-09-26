@@ -16,7 +16,7 @@
   },
   "scripts": {
     "predeploy": "react-scripts build",
-    "deploy": "npm run build&&scp -r ./build/* pika@84.201.176.99:/home/pika/movies-explorer-frontend/build",
+    "deploy": "npm run build&&scp -r ./build/* pika@84.201.176.99:/home/pika/front2/movies-explorer-frontend/build",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },

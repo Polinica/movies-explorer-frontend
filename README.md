@@ -4,6 +4,10 @@
 
 https://polinica.github.io/movies-explorer-frontend/
 
+Ссылка на пул реквест
+
+https://github.com/Polinica/movies-explorer-frontend/pull/2#issuecomment-1736319390
+
 ## Приложение Movies Explorer
 
 Приложение Movies Explorer - сервис с поиском фильмов и сохранением их в личном кабинете. Учебный проект Яндекс.Практикум х BeatFilm.

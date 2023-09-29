@@ -22,7 +22,7 @@ export const CARDS_RENDER_COUNT = {
 };
 
 export const MOVIE_API = {
-  BASE_URL: "",
+  BASE_URL: "https://api.nomoreparties.co/",
   MEDIA_BASE_URL: "https://api.nomoreparties.co/",
 };
 

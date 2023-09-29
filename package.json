@@ -15,7 +15,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "react-scripts build",
+    "predeploy": "npm run build",
     "deploy": "npm run build && scp -r ./build/* pika@84.201.176.99:/home/pika/movies-explorer-frontend",
     "start": "react-scripts start",
     "build": "react-scripts build"

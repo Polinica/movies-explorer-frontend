@@ -15,7 +15,7 @@ function SearchForm({
     searchText: defaultSearchText,
     areShortiesSeleted: defaultAreShortiesSeleted,
   };
-  const form = React.useRef();
+  // const form = React.useRef();
 
   // eslint-disable-next-line no-unused-vars
   const [values, errors, isValid, handleChange] = useForm(defaultValues);

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-import { PAGE_404 } from "../../utils/config";
+// import { PAGE_404 } from "../../utils/config";
 import "./Page404.css";
 
 function Page404() {

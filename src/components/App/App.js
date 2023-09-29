@@ -3,7 +3,7 @@ import Landing from "../Landing/Landing";
 import Movies from "../movies/Movies/Movies";
 // import ProfilePage from "../ProfilePage/ProfilePage";
 import SavedMovies from "../movies/SavedMovies/SavedMovies";
-import Auth from "../Auth/Auth";
+// import Auth from "../Auth/Auth";
 import Page404 from "../Page404/Page404";
 import "./App.css";
 import Register from "../user/Register/Register";

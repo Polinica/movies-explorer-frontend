@@ -2,12 +2,11 @@
   "name": "movies-explorer-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "classnames": "^2.3.2",
+    "classnames": "^2.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
@@ -16,7 +15,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* pika@84.201.176.99:/home/pika/movies-explorer-frontend",
+    "deploy": "npm run build&&scp -r ./build/* pika@84.201.176.99:/home/pika/frontend/new3",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
@@ -39,6 +38,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.0.0"
+    "gh-pages": "^4.0.0"
   }
 }

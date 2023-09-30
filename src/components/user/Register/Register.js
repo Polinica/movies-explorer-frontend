@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useForm from "../../../utils/hooks/useForm";
-import Auth from "../../Auth/Auth";
+import Auth from "../Auth/Auth";
 import AuthInputForEmail from "../AuthInputForEmail/AuthInputForEmail";
 import AuthInputForName from "../AuthInputForName/AuthInputForName";
 import AuthInputForPassword from "../AuthInputForPassword/AuthInputForPassword";
@@ -64,16 +64,19 @@ function Register({ onLogin }) {
         value={values.name ?? ""}
         error={errors.name}
         onChange={handleChange}
+        isDisabled={isLoading}
       />
       <AuthInputForEmail
         value={values.email ?? ""}
         error={errors.email}
         onChange={handleChange}
+        isDisabled={isLoading}
       />
       <AuthInputForPassword
         value={values.password ?? ""}
         error={errors.password}
         onChange={handleChange}
+        isDisabled={isLoading}
       />
     </Auth>
   );

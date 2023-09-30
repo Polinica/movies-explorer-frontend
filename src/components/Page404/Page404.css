@@ -8,10 +8,10 @@
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto auto 1fr;
   grid-template-areas:
-    "."
-    "title"
-    "subtitle"
-    "link";
+    '.'
+    'title'
+    'subtitle'
+    'link';
   justify-items: center;
   gap: 10px;
   /* Текст */

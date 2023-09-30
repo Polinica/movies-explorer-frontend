@@ -1,7 +1,7 @@
 import { ERROR_MSGS } from "../../../utils/config";
 import Message from "../Message/Message";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import Preloader from "../../Preloader/Preloader";
+import Preloader from "../Preloader/Preloader";
 
 function SearchResults({
   isErrorOnLoading,

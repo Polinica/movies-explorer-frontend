@@ -1,4 +1,4 @@
-import AuthInput from "../AuthInput/AuthInput";
+import AuthInput from '../AuthInput/AuthInput';
 
 function AuthInputForName({ ...validationParams }) {
   return (

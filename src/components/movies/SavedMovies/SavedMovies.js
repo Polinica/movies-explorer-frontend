@@ -1,8 +1,8 @@
 import React from "react";
 import mainApi from "../../../utils/MainApi";
 import searchMovies from "../../../utils/searchMovies";
-import Footer from "../../Footer/Footer";
-import Header from "../../Header/Header";
+import Footer from "../../common/Footer/Footer";
+import Header from "../../common/Header/Header";
 import SearchResults from "../SearchResults/SearchResults";
 import SearchForm from "../SearchForm/SearchForm";
 import "./SavedMovies.css";

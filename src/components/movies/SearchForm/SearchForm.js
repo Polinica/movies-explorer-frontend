@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import useForm from "../../../utils/hooks/useForm";
-import Checkbox from "../FilterCheckbox/FilterCheckbox";
+import Checkbox from "../Checkbox/Checkbox";
 import "./SearchForm.css";
 
 function SearchForm({

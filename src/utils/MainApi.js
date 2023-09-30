@@ -123,7 +123,7 @@ const mainApi = new MainApi({
   baseUrl: "https://api.pika.nomoredomainsicu.ru",
   authHeaders: {
     "Content-Type": "application/json",
-    // Authorization: "jwt token here",
+    Authorization: "jwt token here",
   },
 });
 

@@ -1,33 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { REQUEST_ERRORS } from "../../../utils/config";
-import useForm from "../../../utils/hooks/useForm";
-import mainApi from "../../../utils/MainApi";
-import Auth from "../../Auth/Auth";
-import AuthInputForEmail from "../AuthInputForEmail/AuthInputForEmail";
-import AuthInputForPassword from "../AuthInputForPassword/AuthInputForPassword";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { REQUEST_ERRORS } from '../../../utils/config';
+import useForm from '../../../utils/hooks/useForm';
+import mainApi from '../../../utils/MainApi';
+import Auth from '../Auth/Auth';
+import AuthInputForEmail from '../AuthInputForEmail/AuthInputForEmail';
+import AuthInputForPassword from '../AuthInputForPassword/AuthInputForPassword';
 
 function Login({ onLogin }) {
-  const TITLE = "Рады видеть!";
+  const TITLE = 'Рады видеть!';
   const HINT = (
     <p className="auth__hint">
-      Ещё не зарегистрированы?{" "}
+      Ещё не зарегистрированы?{' '}
       <Link to="/signup" className="auth__hint-link">
         Регистрация
       </Link>
     </p>
   );
-  const BUTTON_TEXT = "Войти";
+  const BUTTON_TEXT = 'Войти';
 
   const [values, errors, isValid, handleChange] = useForm();
 
-  const [requestError, setRequestError] = React.useState("");
+  const [requestError, setRequestError] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-    setRequestError("");
+    setRequestError('');
 
     try {
       const res = await mainApi.login(values);
@@ -37,7 +37,7 @@ function Login({ onLogin }) {
     } catch (err) {
       let message;
       switch (err.message) {
-        case "401":
+        case '401':
           message = REQUEST_ERRORS.SIGNIN_401;
           break;
         default:
@@ -45,6 +45,7 @@ function Login({ onLogin }) {
       }
       setRequestError(message);
     }
+
     setIsLoading(false);
   }
 
@@ -59,14 +60,16 @@ function Login({ onLogin }) {
       isLoading={isLoading}
     >
       <AuthInputForEmail
-        value={values.email ?? ""}
+        value={values.email ?? ''}
         error={errors.email}
         onChange={handleChange}
+        isDisabled={isLoading}
       />
       <AuthInputForPassword
-        value={values.password ?? ""}
+        value={values.password ?? ''}
         error={errors.password}
         onChange={handleChange}
+        isDisabled={isLoading}
       />
     </Auth>
   );

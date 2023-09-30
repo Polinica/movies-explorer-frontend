@@ -1,4 +1,4 @@
-import AuthInput from "../AuthInput/AuthInput";
+import AuthInput from '../AuthInput/AuthInput';
 
 function AuthInputForPassword({ ...validationParams }) {
   return (
@@ -7,7 +7,7 @@ function AuthInputForPassword({ ...validationParams }) {
       type="password"
       name="password"
       required={true}
-      placeholder="akagi"
+      placeholder="qwerty"
       {...validationParams}
     />
   );

@@ -1,4 +1,5 @@
-import AuthInput from '../AuthInput/AuthInput';
+import { PLACEHOLDERS } from "../../../utils/config";
+import AuthInput from "../AuthInput/AuthInput";
 
 function AuthInputForEmail({ ...validationParams }) {
   return (
@@ -7,7 +8,7 @@ function AuthInputForEmail({ ...validationParams }) {
       type="email"
       name="email"
       required={true}
-      placeholder="mail@gmail.com"
+      placeholder={PLACEHOLDERS.EMAIL}
       {...validationParams}
     />
   );

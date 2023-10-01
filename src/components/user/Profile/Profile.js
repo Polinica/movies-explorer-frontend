@@ -1,12 +1,12 @@
-import classNames from 'classnames';
-import React from 'react';
-import CurrentUserContext from '../../../contexts/CurrentUserContext';
-import { REQUEST_ERRORS } from '../../../utils/config';
-import useFilledForm from '../../../utils/hooks/useFormWithValidationForProfile';
-import mainApi from '../../../utils/MainApi';
-import Header from '../../common/Header/Header';
-import SubmitButton from '../SubmitButton/SubmitButton';
-import './Profile.css';
+import classNames from "classnames";
+import React from "react";
+import CurrentUserContext from "../../../contexts/CurrentUserContext";
+import { PLACEHOLDERS, REQUEST_ERRORS } from "../../../utils/config";
+import useFilledForm from "../../../utils/hooks/useFormWithValidationForProfile";
+import mainApi from "../../../utils/MainApi";
+import Header from "../../common/Header/Header";
+import SubmitButton from "../SubmitButton/SubmitButton";
+import "./Profile.css";
 
 function Profile({ onLogout, onUpdate }) {
   const currentUser = React.useContext(CurrentUserContext);
@@ -15,10 +15,9 @@ function Profile({ onLogout, onUpdate }) {
   const [values, errors, isValid, handleChange] = useFilledForm(currentUser);
 
   const [isLoading, setIsLoading] = React.useState(false);
-  const [requestError, setRequestError] = React.useState('');
-  const [isSuccussMessageShown, setIsSuccussMessageShown] = React.useState(
-    false,
-  );
+  const [requestError, setRequestError] = React.useState("");
+  const [isSuccussMessageShown, setIsSuccussMessageShown] =
+    React.useState(false);
 
   function switchEditMode() {
     setIsInEditMode((state) => !state);
@@ -27,7 +26,7 @@ function Profile({ onLogout, onUpdate }) {
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-    setRequestError('');
+    setRequestError("");
     setIsSuccussMessageShown(false);
     try {
       const res = await mainApi.updateUserInfo(values);
@@ -38,8 +37,11 @@ function Profile({ onLogout, onUpdate }) {
       console.log(err);
       let message;
       switch (err.message) {
-        case '409':
+        case "409":
           message = REQUEST_ERRORS.UPDATE_409;
+          break;
+        case "500":
+          message = REQUEST_ERRORS.SERVER_500;
           break;
         default:
           message = REQUEST_ERRORS.UPDATE_DEFAULT;
@@ -60,22 +62,22 @@ function Profile({ onLogout, onUpdate }) {
       <main className="profile content__stretched-element">
         <div className="profile__container">
           <h1 className="profile__title">{`Привет, ${
-            currentUser?.name ?? 'Джон'
+            currentUser?.name ?? PLACEHOLDERS.NAME
           }!`}</h1>
           <form className="profile__form" noValidate onSubmit={handleSubmit}>
             <label className="profile__input-container">
               <span className="profile__input-label">Имя</span>
               <input
                 type="text"
-                className={classNames('profile__input', {
+                className={classNames("profile__input", {
                   profile__input_type_error: errors.name,
                 })}
                 name="name"
                 minLength="2"
                 maxLength="30"
                 required={true}
-                placeholder="Джон Макклейн"
-                value={values.name ?? ''}
+                placeholder={PLACEHOLDERS.NAME}
+                value={values.name ?? ""}
                 onChange={handleChange}
                 disabled={isLoading}
                 {...(!isInEditMode ? { disabled: true } : {})}
@@ -85,20 +87,20 @@ function Profile({ onLogout, onUpdate }) {
               <span className="profile__input-label">E-mail</span>
               <input
                 type="email"
-                className={classNames('profile__input', {
+                className={classNames("profile__input", {
                   profile__input_type_error: errors.email,
                 })}
                 name="email"
                 required={true}
-                placeholder="mcclane@nakatomi.corp"
-                value={values.email ?? ''}
+                placeholder={PLACEHOLDERS.EMAIL}
+                value={values.email ?? ""}
                 onChange={handleChange}
                 disabled={isLoading}
                 {...(!isInEditMode ? { disabled: true } : {})}
               />
             </label>
             <p className="profile__success-message">
-              {isSuccussMessageShown && 'Сохранено!'}
+              {isSuccussMessageShown && REQUEST_ERRORS.UPDATE_SUCCESSULLY}
             </p>
 
             {isInEditMode && (

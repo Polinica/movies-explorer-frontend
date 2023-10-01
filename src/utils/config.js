@@ -1,5 +1,8 @@
 export const SEARCH_PARAMS = {
   SHORTIES_MAX_DURATION: 40,
+  PLACEHOLDER: "Фильм",
+  SHORTIES: "Короткометражки",
+  REQUIRED_ERROR: "Нужно ввести ключевое слово",
 };
 
 export const CARDS_RENDER_COUNT = {
@@ -16,23 +19,42 @@ export const CARDS_RENDER_COUNT = {
     ADD: 3,
   },
   default: {
-    INITIAL: 6,
-    ADD: 6,
+    INITIAL: 8,
+    ADD: 4,
   },
 };
 
+// export const DEVICE_WIDTH = {
+//   desktop: { width: 1280, cards: { total: 12, extra: 4 } },
+//   tablet: { width: 768, cards: { total: 9, extra: 3 } },
+//   mobile: { width: 480, cards: { total: 4, extra: 2 } },
+// };
+
 export const MOVIE_API = {
-  BASE_URL: "",
+  BASE_URL: "https://api.nomoreparties.co",
   MEDIA_BASE_URL: "https://api.nomoreparties.co/",
 };
 
-export const ERROR_MSGS = {
+export const MAIN_API = {
+  BASE_URL: "https://api.pika.nomoredomainsicu.ru",
+  AUTH_HEADERS: {
+    "Content-Type": "application/json",
+    Authorization: "jwt token here",
+  },
+};
+
+export const SEARCH_ERRORS = {
   NOT_FOUND: "Ничего не найдено",
   CANT_GET_MOVIES:
     "Во&nbsp;время запроса произошла ошибка. Возможно, проблема с&nbsp;соединением или сервер недоступен. Подождите немного и&nbsp;попробуйте ещё раз",
 };
 
+export const SEARCH_TEXTS = {
+  MORE_BUTTON: "Ещё",
+};
+
 export const REQUEST_ERRORS = {
+  SERVER_500: "На сервере произошла ошибка",
   SIGNUP_409: "Пользователь с таким email уже существует.",
   SIGNUP_DEFAULT: "При регистрации пользователя произошла ошибка.",
   SIGNIN_401: "Вы ввели неправильный логин или пароль.",
@@ -43,4 +65,33 @@ export const REQUEST_ERRORS = {
   SIGNIN_DEFAULT: "При входе произошла ошибка.",
   UPDATE_409: "Пользователь с таким email уже существует.",
   UPDATE_DEFAULT: "При обновлении профиля произошла ошибка.",
+  UPDATE_SUCCESSULLY: "Сохранено!",
+};
+
+export const NAV_TEXTS = {
+  REGISTER: "Регистрация",
+  LOGIN: "Войти",
+  OPEN_MENU: "Открыть меню",
+  CLOSE_MENU: "Закрыть меню",
+  MAIN: "Главная",
+  MOVIES: "Фильмы",
+  SAVED_MOVIES: "Сохранённые фильмы",
+  PROFILE: "Аккаунт",
+};
+
+export const CARD_TEXTS = {
+  SAVE_BUTTON_TEXT: "Сохранить",
+  DELETE_BUTTON_ALT: "Удалить фильм из сохраненных",
+};
+
+export const PAGE_404 = {
+  TITLE: "404",
+  SUBTITLE: "Страница не найдена",
+  LINK: "Назад",
+};
+
+export const PLACEHOLDERS = {
+  EMAIL: "mail@gmail.com",
+  NAME: "Девид Линч",
+  PASSWORD: "qwerty",
 };

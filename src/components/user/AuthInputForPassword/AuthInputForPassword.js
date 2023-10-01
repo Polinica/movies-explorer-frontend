@@ -1,4 +1,5 @@
-import AuthInput from '../AuthInput/AuthInput';
+import { PLACEHOLDERS } from "../../../utils/config";
+import AuthInput from "../AuthInput/AuthInput";
 
 function AuthInputForPassword({ ...validationParams }) {
   return (
@@ -7,7 +8,7 @@ function AuthInputForPassword({ ...validationParams }) {
       type="password"
       name="password"
       required={true}
-      placeholder="qwerty"
+      placeholder={PLACEHOLDERS.PASSWORD}
       {...validationParams}
     />
   );

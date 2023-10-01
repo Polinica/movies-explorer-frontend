@@ -2,7 +2,6 @@ import { SEARCH_PARAMS } from "./config";
 
 function searchMovies(movies, searchText, areShortiesSeleted) {
   if (!movies.length) return movies;
-  searchText = searchText.toLowerCase();
 
   let foundMovies = movies;
 
@@ -12,15 +11,8 @@ function searchMovies(movies, searchText, areShortiesSeleted) {
     );
   }
 
-  foundMovies = foundMovies.filter(
-    (movie) =>
-      movie.nameRU.toLowerCase().includes(searchText) ||
-      movie.nameEN.toLowerCase().includes(searchText) ||
-      movie.description.toLowerCase().includes(searchText) ||
-      movie.country.toLowerCase().includes(searchText) ||
-      movie.director.toLowerCase().includes(searchText) ||
-      movie.year.toLowerCase().includes(searchText) ||
-      movie.duration.toString().includes(searchText)
+  foundMovies = foundMovies.filter((movie) =>
+    movie.nameRU.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return foundMovies;

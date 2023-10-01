@@ -19,7 +19,10 @@ function SearchForm({
   // const form = React.useRef();
 
   // eslint-disable-next-line no-unused-vars
-  const [values, errors, isValid, handleChange] = useForm(defaultValues);
+  const [values, errors, isValid, handleChange] = useForm(
+    defaultValues,
+    !!defaultSearchText
+  );
   const [errorText, setErrorText] = React.useState("");
 
   // function handleChange(event) {

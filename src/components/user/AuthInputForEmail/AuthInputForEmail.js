@@ -8,6 +8,7 @@ function AuthInputForEmail({ ...validationParams }) {
       type="email"
       name="email"
       required={true}
+      pattern="[A-Za-zА-Яа-яЁё\s-]+"
       placeholder={PLACEHOLDERS.EMAIL}
       {...validationParams}
     />

@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React from "react";
 import CurrentUserContext from "../../../contexts/CurrentUserContext";
 import { PLACEHOLDERS, REQUEST_ERRORS } from "../../../utils/config";
-import useFilledForm from "../../../utils/hooks/useFormWithValidationForProfile";
+import useFilledForm from "../../../utils/hooks/useFilledForm";
 import mainApi from "../../../utils/MainApi";
 import Header from "../../common/Header/Header";
 import SubmitButton from "../SubmitButton/SubmitButton";
@@ -75,6 +75,7 @@ function Profile({ onLogout, onUpdate }) {
                 name="name"
                 minLength="2"
                 maxLength="30"
+                pattern="[A-Za-zА-Яа-яЁё\s-]+"
                 required={true}
                 placeholder={PLACEHOLDERS.NAME}
                 value={values.name ?? ""}

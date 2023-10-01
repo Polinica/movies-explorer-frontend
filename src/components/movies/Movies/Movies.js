@@ -86,7 +86,7 @@ function Movies() {
 
   // Сохранение фильмов
   function handleCardClick(movie) {
-    console.log(savedMovies);
+    // console.log(savedMovies);
     const isSaved = savedMovies.some(
       (savedMovie) => savedMovie.movieId === movie.movieId
     );

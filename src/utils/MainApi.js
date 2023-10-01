@@ -16,9 +16,9 @@ class MainApi {
       },
       body: JSON.stringify({ email, password, name }),
     });
-
+    if (!res.ok) return new Error(res.status);
     const data = await res.json();
-    if (!res.ok) throw new Error(res.status);
+
     return data;
   }
 
@@ -32,9 +32,10 @@ class MainApi {
       },
       body: JSON.stringify({ email, password }),
     });
+    if (!res.ok) return new Error(res.status);
 
     const data = await res.json();
-    if (!res.ok) throw new Error(res.status);
+
     return data;
   }
 
@@ -49,9 +50,10 @@ class MainApi {
     const res = await fetch(url, {
       headers,
     });
+    if (!res.ok) return new Error(res.status);
 
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message);
+
     return data;
   }
 
@@ -61,9 +63,10 @@ class MainApi {
     const res = await fetch(url, {
       headers: this._authHeaders,
     });
+    if (!res.ok) return new Error(res.status);
 
     const data = await res.json();
-    if (!res.ok) throw new Error(res.status);
+
     return data;
   }
 
@@ -75,9 +78,10 @@ class MainApi {
       headers: this._authHeaders,
       body: JSON.stringify({ name, email }),
     });
+    if (!res.ok) return new Error(res.status);
 
     const data = await res.json();
-    if (!res.ok) throw new Error(res.status);
+
     return data;
   }
 
@@ -87,9 +91,10 @@ class MainApi {
     const res = await fetch(url, {
       headers: this._authHeaders,
     });
+    if (!res.ok) return new Error(res.status);
 
     const data = await res.json();
-    if (!res.ok) throw new Error(res.status);
+
     return data;
   }
 
@@ -101,9 +106,10 @@ class MainApi {
       headers: this._authHeaders,
       body: JSON.stringify(movieData),
     });
+    if (!res.ok) return new Error(res.status);
 
     const data = await res.json();
-    if (!res.ok) throw new Error(res.status);
+
     return data;
   }
 
@@ -114,9 +120,10 @@ class MainApi {
       method: "DELETE",
       headers: this._authHeaders,
     });
+    if (!res.ok) return new Error(res.status);
 
     const data = await res.json();
-    if (!res.ok) throw new Error(res.status);
+
     return data;
   }
 }

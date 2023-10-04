@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { SEARCH_PARAMS } from "../../../utils/apiConfig";
 import Footer from "../../Footer/Footer";
 import Header from "../../Header/Header";
 import Navigation from "../../Navigation/Navigation";
@@ -10,55 +11,60 @@ import "./Movies.css";
 import moviesApi from "../../../utils/MoviesApi";
 
 function Movies() {
-  const SHORTIES_MAX_DURATION = 40;
+  function searchMovies(movies, searchText, areShortiesSeleted) {
+    if (!movies.length) return movies;
 
-  const [movies, setMovies] = useState([]);
+    let foundMovies = movies;
 
-  const [searchText, setSearchText] = useState("");
-  const [areShortiesSelected, setAreShortiesSelected] = useState(true);
-  const [filteredMovies, setFilteredMovies] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (!movies.length) {
-      setIsLoading(true);
-      getMovies().finally(() => setIsLoading(false));
-    }
-  }, [movies.length]);
-
-  const handleSearchSubmit = ({ searchText, areShortiesSelected }) => {
-    setSearchText(searchText);
-    setAreShortiesSelected(areShortiesSelected);
-  };
-
-  const handleCheckboxChange = (value) => {
-    setAreShortiesSelected(value);
-  };
-
-  const getMovies = async () => {
-    try {
-      const movies = await moviesApi.getMovies();
-      setMovies(movies);
-    } catch (error) {
-      console.log("Error fetching movies:", error);
-    }
-  };
-
-  useEffect(() => {
-    let filtered = [...movies];
-
-    if (!areShortiesSelected) {
-      filtered = filtered.filter(
-        (movie) => movie.duration > SHORTIES_MAX_DURATION
+    if (!areShortiesSeleted) {
+      foundMovies = foundMovies.filter(
+        (movie) => movie.duration > SEARCH_PARAMS.SHORTIES_MAX_DURATION
       );
     }
 
-    const regex = new RegExp(searchText, "i");
-    filtered = filtered.filter((movie) => regex.test(movie.nameRU));
+    const regexp = new RegExp(searchText, "i");
+    foundMovies = foundMovies.filter((movie) => regexp.test(movie.nameRU));
 
-    setFilteredMovies(filtered);
-  }, [movies, searchText, areShortiesSelected]);
+    return foundMovies;
+  }
+
+  const [allMovies, setAllMovies] = useState(null);
+
+  const [searchText, setSearchText] = useState("");
+  const [areShortiesSeleted, setAreShortiesSeleted] = useState(true);
+  const [foundMovies, setFoundMovies] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSearchFormSubmit = async ({ searchText, areShortiesSeleted }) => {
+    if (!allMovies) {
+      setIsLoading(true);
+      await getMovies();
+      setIsLoading(false);
+    }
+    setAreShortiesSeleted(areShortiesSeleted);
+    setSearchText(searchText);
+  };
+
+  const handleCheckboxChange = (value) => {
+    setAreShortiesSeleted(value);
+  };
+
+  const getMovies = async () => {
+    const movies = await moviesApi.getMovies();
+    setAllMovies(movies);
+  };
+
+  useEffect(() => {
+    if (allMovies) {
+      const foundMovies = searchMovies(
+        allMovies,
+        searchText,
+        areShortiesSeleted
+      );
+      setFoundMovies(foundMovies);
+    }
+  }, [searchText, areShortiesSeleted, allMovies]);
 
   return (
     <>
@@ -67,13 +73,13 @@ function Movies() {
       </Header>
       <main>
         <SearchForm
-          onSubmit={handleSearchSubmit}
+          onSubmit={handleSearchFormSubmit}
           onCheckboxChange={handleCheckboxChange}
           isBlocked={isLoading}
           defaultSearchText={searchText}
-          defaultAreShortiesSelected={areShortiesSelected}
+          defaultAreShortiesSelected={areShortiesSeleted}
         />
-        <MoviesCardList type="all" movies={filteredMovies} />
+        <MoviesCardList type="all" movies={foundMovies} />
         <More />
         <Preloader />
       </main>

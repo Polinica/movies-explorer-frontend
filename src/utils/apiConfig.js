@@ -10,3 +10,7 @@ export const MAIN_API = {
     Authorization: "jwt token here",
   },
 };
+
+export const SEARCH_PARAMS = {
+  SHORTIES_MAX_DURATION: 40,
+};

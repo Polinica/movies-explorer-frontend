@@ -1,5 +1,19 @@
 import { MAIN_API } from "./apiConfig";
 
+class Api {
+  constructor({ baseUrl }) {
+    this.baseUrl = baseUrl;
+  }
+
+  _checkResult(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+  }
+}
+
 class MainApi {
   /**
    * Отвечает за осуществление и обработку сетевых запросов к серверу
@@ -11,137 +25,127 @@ class MainApi {
     this._baseUrl = baseUrl;
     this._authHeaders = authHeaders;
   }
-  //`request(url, options)`: Метод выполняет HTTP-запрос на указанный URL с указанными опциями.
-  //Он использует нативный метод `fetch` для выполнения запроса.
-  //В опциях определены метод запроса (`method`), заголовки (`headers`) и тело запроса (`body`).
-  // Если ответ сервера не успешный (код не в диапазоне 200-299), вызывается исключение с сообщением об ошибке.
-  //Иначе, данные ответа преобразуются в JSON и возвращаются.
 
-  async request(url, options) {
-    const requestInit = {
-      method: options.method,
+  async register({ email, password, name }) {
+    const url = `${this._baseUrl}/signup`;
+
+    const res = await fetch(url, {
+      method: "POST",
       headers: {
-        ...options.headers,
-        ...this._authHeaders,
+        "Content-Type": "application/json",
       },
-    };
-
-    if (options.body) {
-      requestInit.body = JSON.stringify(options.body);
-    }
-
-    const response = await fetch(this._baseUrl + url, requestInit);
-
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message);
-    }
+      body: JSON.stringify({ email, password, name }),
+    });
+    if (!res.ok) return new Error(res.status);
+    const data = await res.json();
 
     return data;
   }
 
-  //`register({ email, password, name })`: Метод вызывает `request` для выполнения POST-запроса на URL '/signup'
-  // с указанными параметрами (email, password, name) в теле запроса в виде JSON-объекта.
-  // Возвращает результат `request`.
-  async register({ email, password, name }) {
-    const url = "/signup";
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: { email, password, name },
-    };
-
-    return this.request(url, options);
-  }
-
   async login({ email, password }) {
-    const url = "/signin";
+    const url = `${this._baseUrl}/signin`;
 
-    const options = {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: { email, password },
-    };
+      body: JSON.stringify({ email, password }),
+    });
+    if (!res.ok) return new Error(res.status);
 
-    return this.request(url, options);
+    const data = await res.json();
+
+    return data;
   }
 
   setToken(token) {
-    this._authHeaders.Authorization = token;
+    this._authHeaders.Authorization = `Bearer ${token}`;
   }
 
   async checkToken(token) {
-    const url = "/users/me";
-    const headers = { ...this._authHeaders, Authorization: token };
+    const url = `${this._baseUrl}/users/me`;
+    const headers = { ...this._authHeaders, Authorization: `Bearer ${token}` };
 
-    const options = {
-      method: "GET",
+    const res = await fetch(url, {
       headers,
-    };
+    });
+    if (!res.ok) return new Error(res.status);
 
-    return this.request(url, options);
+    const data = await res.json();
+
+    return data;
   }
 
   async getUserInfo() {
-    const url = "/users/me";
+    const url = `${this._baseUrl}/users/me`;
 
-    const options = {
-      method: "GET",
+    const res = await fetch(url, {
       headers: this._authHeaders,
-    };
+    });
+    if (!res.ok) return new Error(res.status);
 
-    return this.request(url, options);
+    const data = await res.json();
+
+    return data;
   }
 
   async updateUserInfo({ name, email }) {
-    const url = "/users/me";
+    const url = `${this._baseUrl}/users/me`;
 
-    const options = {
+    const res = await fetch(url, {
       method: "PATCH",
       headers: this._authHeaders,
-      body: { name, email },
-    };
+      body: JSON.stringify({ name, email }),
+    });
+    if (!res.ok) return new Error(res.status);
 
-    return this.request(url, options);
+    const data = await res.json();
+
+    return data;
   }
 
   async getSavedMovies() {
-    const url = "/movies";
+    const url = `${this._baseUrl}/movies`;
 
-    const options = {
-      method: "GET",
+    const res = await fetch(url, {
       headers: this._authHeaders,
-    };
+    });
+    if (!res.ok) return new Error(res.status);
 
-    return this.request(url, options);
+    const data = await res.json();
+
+    return data;
   }
 
   async saveMovie(movieData) {
-    const url = "/movies";
+    console.log(" !!! saveMovie: fetch( ", `${this._baseUrl}/movies`);
+    const url = `${this._baseUrl}/movies`;
 
-    const options = {
+    const res = await fetch(url, {
       method: "POST",
       headers: this._authHeaders,
-      body: movieData,
-    };
+      body: JSON.stringify(movieData),
+    });
+    if (!res.ok) return new Error(res.status);
 
-    return this.request(url, options);
+    const data = await res.json();
+
+    return data;
   }
 
-  async deleteMovie(_id) {
-    const url = `/movies/${_id}`;
+  async deleteMovie(id) {
+    const url = `${this._baseUrl}/movies/${id}`;
 
-    const options = {
+    const res = await fetch(url, {
       method: "DELETE",
       headers: this._authHeaders,
-    };
+    });
+    if (!res.ok) return new Error(res.status);
 
-    return this.request(url, options);
+    const data = await res.json();
+
+    return data;
   }
 }
 

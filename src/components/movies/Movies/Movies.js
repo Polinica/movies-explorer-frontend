@@ -8,13 +8,17 @@ import More from "../More/More";
 import "./Movies.css";
 
 function Movies() {
+  function handleSearchSubmit({ searchText, areShortiesSeleted }) {
+    console.log(searchText);
+    console.log(areShortiesSeleted);
+  }
   return (
     <>
       <Header>
         <Navigation />
       </Header>
       <main>
-        <SearchForm />
+        <SearchForm onSubmit={handleSearchSubmit} />
         <MoviesCardList type="all" />
         <More />
         <Preloader />

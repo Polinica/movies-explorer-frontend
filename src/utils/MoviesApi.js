@@ -13,12 +13,10 @@ class MoviesApi {
     // Затем мы отправляем GET-запрос на этот URL и получаем ответ в формате JSON.
     const url = `${this._baseUrl}/beatfilm-movies`;
     const res = await fetch(url);
-    const data = await res.json();
     //Если ответ от сервера не успешный (код ответа не 200), мы возвращаем объект `Error`
     // с сообщением об ошибке, полученным от сервера.
-    if (!res.ok) {
-      return new Error(data.message);
-    }
+    if (!res.ok) return new Error(res.status);
+    const data = await res.json();
     //возвращаем полученные данные о фильмах.
     return data;
   }

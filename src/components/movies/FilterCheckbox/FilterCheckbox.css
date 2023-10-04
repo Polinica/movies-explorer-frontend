@@ -58,9 +58,9 @@
 }
 
 /* Неактивное состояние */
-.checkbox__system-checkbox:disabled + .checkbox__custom-checkbox {
+/* .checkbox__system-checkbox:disabled + .checkbox__custom-checkbox {
   opacity: 0.3;
-}
+} */
 
 /* Рычаг (выключенное состояние) */
 .checkbox__custom-checkbox::after {

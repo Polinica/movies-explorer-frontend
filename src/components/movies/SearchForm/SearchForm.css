@@ -77,6 +77,10 @@
   justify-self: center;
 }
 
+.search-form__input:disabled {
+  background-color: inherit;
+}
+
 .search-form__input_invalid,
 .search-form__input_invalid:focus {
   border-bottom-color: var(--error);

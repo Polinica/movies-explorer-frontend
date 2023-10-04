@@ -3,24 +3,34 @@ import { useState, useEffect, useRef } from "react";
 import Checkbox from "../FilterCheckbox/FilterCheckbox";
 import "./SearchForm.css";
 
-//Компонент принимает входным параметром функцию onSubmit,
-//которая будет вызвана при отправке формы.
-function SearchForm({ onSubmit }) {
-  //Внутри компонента определены константы DEFAULT_VALUES,
-  //которая содержит значения по умолчанию для полей формы, и два состояния - inputValues и errorText.
-  const DEFAULT_VALUES = { searchText: "", showShorties: true };
+function SearchForm({
+  onSubmit,
+  onCheckboxChange,
+  isBlocked,
+  defaultSearchText,
+  defaultAreShorties,
+}) {
+  const defaultValues = {
+    searchText: defaultSearchText,
+    showShorties: defaultAreShorties,
+  };
+  // const DEFAULT_VALUES = { searchText: "", showShorties: true };
   const form = useRef();
-  const [inputValues, setInputValues] = useState(DEFAULT_VALUES);
+  const [inputValues, setInputValues] = useState(defaultValues);
   const [isValid, setIsValid] = useState(false);
   const [isErrorShown, setIsErrorShown] = useState(false);
   const [errorText, setErrorText] = useState("");
   //Функция handleChange обрабатывает изменения в полях формы и обновляет состояние inputValues.
   function handleChange(event) {
-    const name = event.target.name;
-    const value =
-      event.target.type === "checkbox"
-        ? event.target.checked
-        : event.target.value;
+    const input = event.target;
+    const name = input.name;
+    let value;
+    if (input.type === "checkbox") {
+      value = input.checked;
+      onCheckboxChange(value);
+    } else {
+      value = input.value;
+    }
     setInputValues((state) => ({ ...state, [name]: value }));
     validateForm();
   }
@@ -62,8 +72,9 @@ function SearchForm({ onSubmit }) {
         placeholder="Фильм"
         name="searchText"
         required
-        value={inputValues.search}
+        value={inputValues.searchText}
         onChange={handleChange}
+        disabled={isBlocked}
       />
       <Checkbox
         title="Короткометражки"
@@ -71,9 +82,14 @@ function SearchForm({ onSubmit }) {
         name="showShorties"
         checked={inputValues.showShorties}
         onChange={handleChange}
+        disabled={isBlocked}
       />
       <span className="search-form__error">{isErrorShown && errorText}</span>
-      <button type="submit" className="search-form__button"></button>
+      <button
+        type="submit"
+        className="search-form__button"
+        disabled={isBlocked}
+      ></button>
     </form>
   );
 }

@@ -37,7 +37,7 @@ function Movies() {
   const [isLoading, setIsLoading] = useState(false);
   const [isErrorOnLoading, setIsErrorOnLoading] = useState(false);
 
-  // Обработчик отправки формы поиска
+  // обрабатывает отправку формы поиска и вызывает функцию
   const handleSearchFormSubmit = async ({ searchText, areShortiesSeleted }) => {
     if (!allMovies) {
       setIsLoading(true);
@@ -46,6 +46,9 @@ function Movies() {
     }
     setAreShortiesSeleted(areShortiesSeleted);
     setSearchText(searchText);
+
+    // Сохраните параметры в localStorage
+    saveToLocalStorage();
   };
 
   // Обработчик изменения состояния чекбокса
@@ -90,6 +93,31 @@ function Movies() {
       </div>
     );
   }
+
+  // Функция для сохранения параметров в localStorage
+  function saveToLocalStorage() {
+    localStorage.setItem("searchText", searchText);
+    localStorage.setItem("areShortiesSeleted", areShortiesSeleted.toString());
+  }
+
+  // Функция для загрузки параметров из localStorage
+  function loadFromLocalStorage() {
+    const savedSearchText = localStorage.getItem("searchText");
+    const savedAreShortiesSeleted = localStorage.getItem("areShortiesSeleted");
+
+    if (savedSearchText) {
+      setSearchText(savedSearchText);
+    }
+
+    if (savedAreShortiesSeleted) {
+      setAreShortiesSeleted(savedAreShortiesSeleted === "true");
+    }
+  }
+
+  // Вызывайте функцию loadFromLocalStorage при монтировании компонента
+  useEffect(() => {
+    loadFromLocalStorage();
+  }, []);
 
   return (
     <>

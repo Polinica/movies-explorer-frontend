@@ -23,8 +23,13 @@ function Movies() {
       );
     }
 
-    const regexp = new RegExp(searchText, "i");
-    foundMovies = foundMovies.filter((movie) => regexp.test(movie.nameRU));
+    // Приводим текст поиска и названия фильмов к нижнему регистру
+    const searchTextLower = searchText.toLowerCase();
+
+    // Фильтруем фильмы
+    foundMovies = foundMovies.filter((movie) =>
+      movie.nameRU.toLowerCase().includes(searchTextLower)
+    );
 
     return foundMovies;
   }
@@ -97,7 +102,7 @@ function Movies() {
   // Функция для сохранения параметров в localStorage
   function saveToLocalStorage() {
     localStorage.setItem("searchText", searchText);
-    localStorage.setItem("areShortiesSeleted", areShortiesSeleted.toString());
+    localStorage.setItem("areShortiesSeleted", areShortiesSeleted);
   }
 
   // Функция для загрузки параметров из localStorage
@@ -119,6 +124,24 @@ function Movies() {
     loadFromLocalStorage();
   }, []);
 
+  const ERROR_MSGS = {
+    NOT_FOUND: "Ничего не найдено",
+    CANT_GET_MOVIES:
+      "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
+  };
+
+  function SearchResults({ isErrorOnLoading, isLoading, movies }) {
+    return isErrorOnLoading ? (
+      <Message text={ERROR_MSGS.CANT_GET_MOVIES} isError />
+    ) : isLoading ? (
+      <Preloader />
+    ) : movies.length === 0 ? (
+      <Message text={ERROR_MSGS.NOT_FOUND} />
+    ) : (
+      <MoviesCardList type="all" movies={movies} />
+    );
+  }
+
   return (
     <>
       <Header>
@@ -134,19 +157,12 @@ function Movies() {
         />
         {/* <MoviesCardList type="all" movies={foundMovies} /> */}
         {/* <More /> */}
-        {isErrorOnLoading ? (
-          <Message
-            text="Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-            isError
+        {searchText && (
+          <SearchResults
+            isErrorOnLoading={isErrorOnLoading}
+            isLoading={isLoading}
+            movies={foundMovies}
           />
-        ) : isLoading ? (
-          <Preloader />
-        ) : foundMovies.length ? (
-          <MoviesCardList type="all" movies={foundMovies} />
-        ) : allMovies ? (
-          <Message text="Ничего не найдено" />
-        ) : (
-          false
         )}
       </main>
       <Footer />

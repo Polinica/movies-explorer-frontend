@@ -2,10 +2,13 @@ import "./MoviesCard.css";
 import photo from "../../../images/IMG007.jpg";
 import CardButton from "../CardButton/CardButton";
 import React from "react";
+import { MOVIE_API } from "../../../utils/apiConfig";
 
-function MoviesCard({ name, link, type }) {
+function MoviesCard({ movieData, children }) {
   // TESTING BUTTON CLICK
   const [isSaved, setIsSaved] = React.useState(false);
+
+  const type = "all";
 
   function handleClickSave() {
     setIsSaved((state) => !state);
@@ -19,13 +22,13 @@ function MoviesCard({ name, link, type }) {
   return (
     <li className="movie-card" ref={ref}>
       <img
-        src={link}
-        alt={`Кадр из фильма ${name}`}
+        src={MOVIE_API.MEDIA_BASE_URL + movieData.image.url}
+        alt={`Кадр из фильма ${movieData.name}`}
         className="movie-card__thumbnail"
       />
       <div className="cards__text">
         <div className="cards__tex-row">
-          <h3 className="movie-card__name">{name}</h3>
+          <h3 className="movie-card__name">{movieData.nameRU}</h3>
 
           {type === "all" ? (
             isSaved ? (

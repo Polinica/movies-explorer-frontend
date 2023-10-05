@@ -17,7 +17,7 @@ function SearchForm({
   // const DEFAULT_VALUES = { searchText: "", showShorties: true };
   const form = useRef();
   const [inputValues, setInputValues] = useState(defaultValues);
-  const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(true);
   const [isErrorShown, setIsErrorShown] = useState(false);
   const [errorText, setErrorText] = useState("");
   //Функция handleChange обрабатывает изменения в полях формы и обновляет состояние inputValues.
@@ -38,6 +38,10 @@ function SearchForm({
   function validateForm() {
     setIsValid(form.current.checkValidity());
   }
+
+  useEffect(() => {
+    validateForm();
+  }, []);
 
   useEffect(() => {
     if (isValid) {

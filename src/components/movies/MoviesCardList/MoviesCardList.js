@@ -34,12 +34,14 @@ function MoviesCardList({ type, movies }) {
   };
 
   useEffect(() => {
-    const columnsCount = countGridColumns(grid.current);
-    const initialCardsCount =
-      CARDS_RENDER_COUNT[columnsCount]?.initial ??
-      CARDS_RENDER_COUNT["default"].initial;
-    const array = movies.slice(0, initialCardsCount);
-    setRenderedMovies(array);
+    if (movies.length) {
+      const columnsCount = countGridColumns(grid.current);
+      const initialCardsCount =
+        CARDS_RENDER_COUNT[columnsCount]?.initial ??
+        CARDS_RENDER_COUNT["default"].initial;
+      const array = movies.slice(0, initialCardsCount);
+      setRenderedMovies(array);
+    }
   }, [movies]);
 
   function handleMoreClick() {
@@ -53,26 +55,34 @@ function MoviesCardList({ type, movies }) {
     setRenderedMovies(array);
   }
 
+  function Message({ text, isError = false }) {
+    const messageClasses = `message__text ${
+      isError ? "message__text_type_error" : ""
+    }`;
+
+    return (
+      <div className="message section">
+        <p className={messageClasses}>{text}</p>
+      </div>
+    );
+  }
+  
+
   return (
     <>
-      <ul
-        className="movie-card-list section"
-        aria-label="Список фильмов"
-        ref={grid}
-      >
-        {renderedMovies.map((movie) => {
-          return (
-            <MoviesCard
-              type={type}
-              key={movie._id}
-              name={movie.name}
-              duration={movie.duration}
-              link={movie.link}
-              thumbnail={"https://api.nomoreparties.co/" + movie.image.url}
-            />
-          );
-        })}
-      </ul>
+      {movies.length === 0 ? (
+        <Message text="Ничего не найдено" />
+      ) : (
+        <ul
+          className="movie-card-list section"
+          aria-label="Список фильмов"
+          ref={grid}
+        >
+          {renderedMovies.map((movie) => {
+            return <MoviesCard movieData={movie} type={type} key={movie.id} />;
+          })}
+        </ul>
+      )}
       {/* Уберите проверку на renderedMovies.length */}
       {/* Это отключит кнопку "More" */}
       {/* {renderedMovies.length < movies.length && (

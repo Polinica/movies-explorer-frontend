@@ -43,12 +43,26 @@ function Movies() {
   const [isErrorOnLoading, setIsErrorOnLoading] = useState(false);
 
   // обрабатывает отправку формы поиска и вызывает функцию
+  // const handleSearchFormSubmit = async ({ searchText, areShortiesSeleted }) => {
+  //   // if (!allMovies) {
+  //   setIsLoading(true);
+  //   await getMovies();
+  //   setIsLoading(false);
+  //   //}
+  //   setAreShortiesSeleted(areShortiesSeleted);
+  //   setSearchText(searchText);
+  //   if (!allMovies) getMovies();
+
+  //   // Сохраните параметры в localStorage
+  //   saveToLocalStorage();
+  // };
   const handleSearchFormSubmit = async ({ searchText, areShortiesSeleted }) => {
+    setIsLoading(true);
     if (!allMovies) {
-      setIsLoading(true);
       await getMovies();
-      setIsLoading(false);
     }
+    setIsLoading(false);
+
     setAreShortiesSeleted(areShortiesSeleted);
     setSearchText(searchText);
 
@@ -59,11 +73,13 @@ function Movies() {
   // Обработчик изменения состояния чекбокса
   const handleCheckboxChange = (value) => {
     setAreShortiesSeleted(value);
+    if (!allMovies) getMovies();
   };
 
   // Получение фильмов
   async function getMovies() {
     setIsErrorOnLoading(false);
+    setIsLoading(true);
     try {
       const movies = await moviesApi.getMovies();
       setAllMovies(movies);
@@ -71,7 +87,32 @@ function Movies() {
       console.error("Ошибка при загрузке фильмов:", error);
       setIsErrorOnLoading(true);
     }
+    setIsLoading(false);
   }
+
+  //В функции getMovies(), после получения фильмов с
+  //помощью moviesApi.getMovies(), вы можете устанавливать
+  //фильмы в зависимости от текущих настроек (флажка "areShortiesSeleted"):
+
+  // async function getMovies() {
+  //   setIsErrorOnLoading(false);
+  //   setIsLoading(true);
+  //   try {
+  //     let movies;
+  //     if (areShortiesSeleted) {
+  //       // Здесь делайте запрос для короткометражных фильмов
+  //       movies = await moviesApi.getShortMovies();
+  //     } else {
+  //       // Здесь делайте запрос для всех фильмов
+  //       movies = await moviesApi.getMovies();
+  //     }
+  //     setAllMovies(movies);
+  //   } catch (error) {
+  //     console.error("Ошибка при загрузке фильмов:", error);
+  //     setIsErrorOnLoading(true);
+  //   }
+  //   setIsLoading(false);
+  // }
 
   // Эффект для поиска фильмов при изменении состояния
   useEffect(() => {
@@ -130,7 +171,14 @@ function Movies() {
       "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
   };
 
-  function SearchResults({ isErrorOnLoading, isLoading, movies }) {
+  function SearchResults({
+    isErrorOnLoading,
+    isLoading,
+    movies,
+    savedMovies,
+    onCardClick,
+    isSavedMoviesSearchResult = false,
+  }) {
     return isErrorOnLoading ? (
       <Message text={ERROR_MSGS.CANT_GET_MOVIES} isError />
     ) : isLoading ? (
@@ -138,8 +186,38 @@ function Movies() {
     ) : movies.length === 0 ? (
       <Message text={ERROR_MSGS.NOT_FOUND} />
     ) : (
-      <MoviesCardList type="all" movies={movies} />
+      <MoviesCardList
+        movies={movies}
+        savedMovies={savedMovies}
+        onCardClick={onCardClick}
+        isSavedMoviesCardList={isSavedMoviesSearchResult}
+      />
     );
+  }
+
+  // Сохраненные фильмы
+  const [savedMovies, setSavedMovies] = useState([]);
+
+  // Сохранение фильмов
+  function handleCardClick(movieId) {
+    const isSaved = savedMovies.some((savedMovie) => savedMovie.id === movieId);
+    if (isSaved) {
+      deleteSavedMovie(movieId);
+    } else {
+      addSavedMovie(movieId);
+    }
+    console.log(savedMovies);
+  }
+
+  function deleteSavedMovie(movieId) {
+    setSavedMovies((movies) => movies.filter((movie) => movie.id !== movieId));
+  }
+
+  function addSavedMovie(movieId) {
+    setSavedMovies((movies) => [
+      ...movies,
+      allMovies.find((movie) => movie.id === movieId),
+    ]);
   }
 
   return (
@@ -162,6 +240,8 @@ function Movies() {
             isErrorOnLoading={isErrorOnLoading}
             isLoading={isLoading}
             movies={foundMovies}
+            savedMovies={savedMovies}
+            onCardClick={handleCardClick}
           />
         )}
       </main>

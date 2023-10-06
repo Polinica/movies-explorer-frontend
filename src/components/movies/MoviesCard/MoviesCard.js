@@ -1,26 +1,36 @@
 import "./MoviesCard.css";
 import photo from "../../../images/IMG007.jpg";
-import CardButton from "../CardButton/CardButton";
+import { WorkCardButton } from "../CardButton/CardButton";
 import React from "react";
 import { MOVIE_API } from "../../../utils/apiConfig";
+import { SavedCardButton } from "../CardButton/CardButton";
 
-function MoviesCard({ movieData, children }) {
-  // TESTING BUTTON CLICK
-  const [isSaved, setIsSaved] = React.useState(false);
-
-  const type = "all";
-
-  function handleClickSave() {
-    setIsSaved((state) => !state);
+function MoviesCard({ movieData, isSaved, onClick, isSavedMovieCard = false }) {
+  function handleClick() {
+    onClick(movieData.id);
   }
-  const ref = React.useRef();
-  function handleClickDelete() {
-    setIsSaved(false);
-    ref.current.remove();
-  }
+
+  // function MoviesCard({ movieData, isSaved, onClick }) {
+  //   // TESTING BUTTON CLICK
+  //   const [isSaved, setIsSaved] = React.useState(false);
+
+  //   const type = "all";
+
+  //   function handleClickSave() {
+  //     setIsSaved((state) => !state);
+  //   }
+  //   const ref = React.useRef();
+  //   function handleClickDelete() {
+  //     setIsSaved(false);
+  //     ref.current.remove();
+  //   }
+
+  //   function handleClick() {
+  //     onClick(movieData.id);
+  //   }
 
   return (
-    <li className="movie-card" ref={ref}>
+    <li className="movie-card">
       <img
         src={MOVIE_API.MEDIA_BASE_URL + movieData.image.url}
         alt={`Кадр из фильма ${movieData.name}`}
@@ -29,28 +39,12 @@ function MoviesCard({ movieData, children }) {
       <div className="cards__text">
         <div className="cards__tex-row">
           <h3 className="movie-card__name">{movieData.nameRU}</h3>
-
-          {type === "all" ? (
-            isSaved ? (
-              <CardButton
-                className="movie-card__button"
-                type="done"
-                onClick={handleClickSave}
-              />
-            ) : (
-              <CardButton
-                className="movie-card__button"
-                type="save"
-                onClick={handleClickSave}
-              />
-            )
+          {isSavedMovieCard ? (
+            <SavedCardButton onClick={handleClick} />
           ) : (
-            <CardButton
-              className="movie-card__button"
-              type="delete"
-              onClick={handleClickDelete}
-            />
+            <WorkCardButton isSaved={isSaved} onClick={handleClick} />
           )}
+          {/* <WorkCardButton isSaved={isSaved} onClick={handleClick} /> */}
         </div>
         <div className="cards__tex-row">
           <p className="movie-card__duration">1ч42м</p>

@@ -3,7 +3,12 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 import More from "../More/More";
 
-function MoviesCardList({ type, movies }) {
+function MoviesCardList({
+  movies,
+  savedMovies,
+  onCardClick,
+  isSavedMoviesCardList = false,
+}) {
   const [renderedMovies, setRenderedMovies] = useState([]);
   const grid = useRef();
 
@@ -66,7 +71,10 @@ function MoviesCardList({ type, movies }) {
       </div>
     );
   }
-  
+
+  function checkIsMovieSaved(movieId) {
+    return savedMovies.some((savedMovie) => savedMovie.id === movieId);
+  }
 
   return (
     <>
@@ -79,7 +87,15 @@ function MoviesCardList({ type, movies }) {
           ref={grid}
         >
           {renderedMovies.map((movie) => {
-            return <MoviesCard movieData={movie} type={type} key={movie.id} />;
+            return (
+              <MoviesCard
+                movieData={movie}
+                isSaved={checkIsMovieSaved(movie.id)}
+                onClick={onCardClick}
+                key={movie.id}
+                isSavedMovieCard={isSavedMoviesCardList}
+              />
+            );
           })}
         </ul>
       )}

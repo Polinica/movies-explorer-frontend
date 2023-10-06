@@ -1,7 +1,5 @@
 import "./MoviesCard.css";
-import photo from "../../../images/IMG007.jpg";
 import { WorkCardButton } from "../CardButton/CardButton";
-import React from "react";
 import { MOVIE_API } from "../../../utils/apiConfig";
 import { SavedCardButton } from "../CardButton/CardButton";
 

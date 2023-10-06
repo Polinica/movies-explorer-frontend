@@ -1,9 +1,10 @@
-import classNames from "classnames";
-import "./FilterCheckbox.css";
+import './FilterCheckbox.css';
 
 function Checkbox({ className, title, name, checked, onChange, disabled }) {
+  const checkboxClass = `checkbox ${className}`;
+
   return (
-    <label className={classNames(className, "checkbox")}>
+    <label className={checkboxClass}>
       <input
         type="checkbox"
         className="checkbox__system-checkbox"

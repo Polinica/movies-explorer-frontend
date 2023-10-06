@@ -1,4 +1,3 @@
-import React from "react";
 import "./CardButton.css";
 
 function createCardButton({ className, alt, text, onClick }) {

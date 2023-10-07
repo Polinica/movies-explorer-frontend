@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-export default function useForm() {
-  const [values, setValues] = useState({});
+export default function useForm(initialValues = {}) {
+  const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 

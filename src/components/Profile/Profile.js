@@ -1,18 +1,60 @@
+import classNames from "classnames";
 import React, { useState, useContext } from "react";
 import "./Profile.css";
 import Header from "../Header/Header";
 import CurrentUserContext from "../../context/CurrentUserContext";
 import useForm from "../../utils/hooks/useFormValidation";
+import { REQUEST_ERRORS } from "../../utils/apiConfig";
+import mainApi from "../../utils/MainApi";
+import SubmitButton from "../user/SubmitButton/SubmitButton";
 
-function Profile({ onLogout }) {
-  const [isInEditMode, setIsInEditMode] = useState(true);
+function Profile({ onLogout, onUpdate }) {
+  const [isInEditMode, setIsInEditMode] = useState(false);
   const currentUser = useContext(CurrentUserContext);
 
-  const [values, errors, isValid, handleChange] = useForm();
+  const [values, errors, isValid, handleChange] = useForm(currentUser);
 
-  function switchEditMode(evt) {
-    evt.preventDefault();
+  const [requestError, setRequestError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [areSameValues, setAreSameValues] = useState(true);
+
+  function switchEditMode() {
     setIsInEditMode((state) => !state);
+  }
+
+  React.useEffect(() => {
+    if (
+      values.name === currentUser.name &&
+      values.email === currentUser.email
+    ) {
+      setAreSameValues(true);
+      return;
+    }
+    setAreSameValues(false);
+  }, [values, currentUser]);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setIsLoading(true);
+    setRequestError("");
+    try {
+      const res = await mainApi.updateUserInfo(values);
+      onUpdate(res);
+      switchEditMode();
+    } catch (err) {
+      console.log(err);
+      let message;
+      switch (err.message) {
+        case "409":
+          message = REQUEST_ERRORS.UPDATE_409;
+          break;
+        default:
+          message = REQUEST_ERRORS.UPDATE_DEFAULT;
+      }
+      setRequestError(message);
+    }
+    setIsLoading(false);
   }
 
   const nameToDisplay = isInEditMode
@@ -26,18 +68,22 @@ function Profile({ onLogout }) {
       <main className="profile content__stretched-element">
         <div className="profile__container">
           <h1 className="profile__title">{`Привет, ${nameToDisplay}!`}</h1>
-          <form className="profile__form">
+          <form className="profile__form" noValidate onSubmit={handleSubmit}>
             <label className="profile__input-container">
               <span className="profile__input-label">Имя</span>
               <input
                 type="text"
-                className="profile__input"
+                className={classNames("profile__input", {
+                  profile__input_type_error: errors.name,
+                })}
                 name="name"
                 minLength="2"
                 maxLength="30"
                 required={true}
-                value={nameToDisplay}
+                // value={nameToDisplay}
+                value={values.name ?? ""}
                 onChange={handleChange}
+                disabled={isLoading}
                 {...(!isInEditMode ? { disabled: true } : {})}
               />
             </label>
@@ -45,27 +91,26 @@ function Profile({ onLogout }) {
               <span className="profile__input-label">E-mail</span>
               <input
                 type="email"
-                className="profile__input"
+                className={classNames("profile__input", {
+                  profile__input_type_error: errors.email,
+                })}
                 name="email"
                 required={true}
-                value={emailToDisplay}
+                value={values.email ?? ""}
                 onChange={handleChange}
+                disabled={isLoading}
                 {...(!isInEditMode ? { disabled: true } : {})}
               />
             </label>
 
             {isInEditMode && (
               <>
-                <p className="profile__error-message">
-                  При обновлении профиля произошла ошибка.
-                </p>
-                <button
-                  className="input__submit-button"
-                  onClick={switchEditMode}
-                  type="submit"
-                >
-                  Сохранить
-                </button>
+                <p className="profile__error-message">{requestError}</p>
+                <SubmitButton
+                  title="Сохранить"
+                  isDisabled={!isValid || areSameValues}
+                  isLoading={isLoading}
+                />
               </>
             )}
           </form>

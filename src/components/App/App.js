@@ -18,37 +18,67 @@ function App() {
   // Установка начальных значений для текущего пользователя и состояния входа
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const navigate = useNavigate();
 
   // Авторизация при открытии страницы
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      mainApi
-        .checkToken(token)
-        .then((res) => {
-          mainApi.setToken(token);
-          setCurrentUser(res);
-        })
-        .catch((err) => {
-          localStorage.removeItem("token");
-          localStorage.removeItem("searchText");
-          localStorage.removeItem("areMoviesSelected");
-          localStorage.removeItem("foundMovies");
-          setCurrentUser(null);
-          console.error(err);
-        });
-    }
+    checkToken();
   }, []);
 
-  async function handleLogin({ token }) {
+  async function checkToken() {
+    setIsLoading(true);
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const res = await mainApi.checkToken(token);
+        mainApi.setToken(token);
+        setCurrentUser(res);
+      } catch (err) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("searchText");
+        localStorage.removeItem("areMoviesSelected");
+        localStorage.removeItem("foundMovies");
+        setCurrentUser(null);
+        console.error(err);
+      }
+    }
+    setIsLoading(false);
+  }
+  // React.useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     mainApi
+  //       .checkToken(token)
+  //       .then((res) => {
+  //         mainApi.setToken(token);
+  //         setCurrentUser(res);
+  //       })
+  //       .catch((err) => {
+  //         localStorage.removeItem("token");
+  //         localStorage.removeItem("searchText");
+  //         localStorage.removeItem("areMoviesSelected");
+  //         localStorage.removeItem("foundMovies");
+  //         setCurrentUser(null);
+  //         console.error(err);
+  //       });
+  //   }
+  // }, []);
+  function handleLogin({ token }) {
     localStorage.setItem("token", token);
     mainApi.setToken(token);
     // const user = await mainApi.getUserInfo();
-    setCurrentUser({});
+    checkToken(token);
     navigate("/movies");
   }
+  // async function handleLogin({ token }) {
+  //   localStorage.setItem("token", token);
+  //   mainApi.setToken(token);
+  //   // const user = await mainApi.getUserInfo();
+  //   setCurrentUser({});
+  //   navigate("/movies");
+  // }
 
   function handleLogOut() {
     localStorage.removeItem("token");
@@ -59,17 +89,19 @@ function App() {
     navigate("/");
   }
 
+  function handleUpdateUserInfo(res) {
+    setCurrentUser(res);
+  }
+
   return (
-    <CurrentUserContext.Provider
-      value={{ currentUser, setCurrentUser, isLoggedIn, setIsLoggedIn }}
-    >
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="content">
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route
             path="/movies"
             element={
-              <ProtectedRoute redirectPath="/">
+              <ProtectedRoute isLoading={isLoading} redirectPath="/">
                 <Movies />
               </ProtectedRoute>
             }
@@ -77,7 +109,7 @@ function App() {
           <Route
             path="/saved-movies"
             element={
-              <ProtectedRoute redirectPath="/">
+              <ProtectedRoute isLoading={isLoading} redirectPath="/">
                 <SavedMovies />
               </ProtectedRoute>
             }
@@ -85,8 +117,11 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute redirectPath="/">
-                <Profile onLogout={handleLogOut} />
+              <ProtectedRoute isLoading={isLoading} redirectPath="/">
+                <Profile
+                  onLogout={handleLogOut}
+                  onUpdate={handleUpdateUserInfo}
+                />
               </ProtectedRoute>
             }
           />

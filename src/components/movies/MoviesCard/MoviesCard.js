@@ -5,12 +5,8 @@ import { MOVIE_API } from "../../../utils/apiConfig";
 import { SavedCardButton } from "../CardButton/CardButton";
 
 function MoviesCard({ movie, isSaved, onClick, isSavedMovieCard = false }) {
-  const [isLoading, setIsLoading] = useState(false);
-
-  async function handleClick() {
-    setIsLoading(true);
-    await onClick(movie);
-    setIsLoading(false);
+  function handleClick() {
+    onClick(movie);
   }
 
   // function MoviesCard({ movieData, isSaved, onClick }) {
@@ -43,15 +39,10 @@ function MoviesCard({ movie, isSaved, onClick, isSavedMovieCard = false }) {
         <div className="cards__tex-row">
           <h3 className="movie-card__name">{movie.nameRU}</h3>
           {isSavedMovieCard ? (
-            <SavedCardButton onClick={handleClick} disabled={isLoading} />
+            <SavedCardButton onClick={handleClick} />
           ) : (
-            <WorkCardButton
-              isSaved={isSaved}
-              onClick={handleClick}
-              disabled={isLoading}
-            />
+            <WorkCardButton isSaved={isSaved} onClick={handleClick} />
           )}
-          {/* <WorkCardButton isSaved={isSaved} onClick={handleClick} /> */}
         </div>
         <div className="cards__tex-row">
           <p className="movie-card__duration">1ч42м</p>

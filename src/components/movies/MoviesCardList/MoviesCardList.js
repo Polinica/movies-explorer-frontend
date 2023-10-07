@@ -3,6 +3,25 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 import More from "../More/More";
 
+const CARDS_RENDER_COUNT = {
+  1: {
+    initial: 5,
+    add: 2,
+  },
+  2: {
+    initial: 8,
+    add: 2,
+  },
+  3: {
+    initial: 12,
+    add: 3,
+  },
+  default: {
+    initial: 8,
+    add: 4,
+  },
+};
+
 function MoviesCardList({
   movies,
   savedMovies,
@@ -18,25 +37,6 @@ function MoviesCardList({
       .getPropertyValue("grid-template-columns")
       .split(" ").length;
   }
-
-  const CARDS_RENDER_COUNT = {
-    1: {
-      initial: 5,
-      add: 2,
-    },
-    2: {
-      initial: 8,
-      add: 2,
-    },
-    3: {
-      initial: 12,
-      add: 3,
-    },
-    default: {
-      initial: 8,
-      add: 4,
-    },
-  };
 
   useEffect(() => {
     if (movies.length) {
@@ -73,9 +73,12 @@ function MoviesCardList({
   }
 
   function checkIsMovieSaved(movie) {
-    return savedMovies.some(
-      (savedMovie) => savedMovie.movieId === movie.movieId
-    );
+    if (Array.isArray(savedMovies)) {
+      return savedMovies.some(
+        (savedMovie) => savedMovie.movieId === movie.movieId
+      );
+    }
+    return false; // По умолчанию считаем, что фильм не сохранен
   }
 
   return (

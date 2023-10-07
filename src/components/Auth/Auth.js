@@ -1,6 +1,7 @@
 import "./Auth.css";
 import logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
+import SubmitButton from "../user/SubmitButton/SubmitButton";
 
 function Auth({
   title,
@@ -53,7 +54,7 @@ function Auth({
         <form className="auth__form" noValidate onSubmit={onSubmit}>
           {children}
           <p className="auth__request-error">{requestError}</p>
-          <button
+          <SubmitButton
             title={buttonText}
             className="auth__submit-button"
             type="submit"
@@ -61,7 +62,7 @@ function Auth({
             isLoading={isLoading}
           >
             Зарегистрироваться
-          </button>
+          </SubmitButton>
         </form>
         {hint}
       </div>

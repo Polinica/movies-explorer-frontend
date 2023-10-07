@@ -15,8 +15,8 @@ const REQUEST_ERRORS = {
   SIGNUP_DEFAULT: "При регистрации пользователя произошла ошибка.",
 };
 
-function useForm() {
-  const [values, setValues] = useState({});
+function useForm(initialValues = {}) {
+  const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 

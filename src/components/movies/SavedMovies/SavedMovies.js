@@ -9,6 +9,28 @@ import "./SavedMovies.css";
 import { SEARCH_PARAMS } from "../../../utils/apiConfig";
 import Preloader from "../../Preloader/Preloader";
 
+function searchMovies(movies, searchText, areMoviesSelected) {
+  if (!movies.length) return movies;
+
+  let foundMovies = movies;
+
+  if (!areMoviesSelected) {
+    foundMovies = foundMovies.filter(
+      (movie) => movie.duration > SEARCH_PARAMS.SHORTIES_MAX_DURATION
+    );
+  }
+
+  // Приводим текст поиска и названия фильмов к нижнему регистру
+  const searchTextLower = searchText.toLowerCase();
+
+  // Фильтруем фильмы
+  foundMovies = foundMovies.filter((movie) =>
+    movie.nameRU.toLowerCase().includes(searchTextLower)
+  );
+
+  return foundMovies;
+}
+
 function Message({ text, isError = false }) {
   return (
     <div className="message section">
@@ -49,28 +71,6 @@ function SearchResults({
       isSavedMoviesCardList={isSavedMoviesSearchResult}
     />
   );
-}
-
-function searchMovies(movies, searchText, areMoviesSelected) {
-  if (!movies.length) return movies;
-
-  let foundMovies = movies;
-
-  if (!areMoviesSelected) {
-    foundMovies = foundMovies.filter(
-      (movie) => movie.duration > SEARCH_PARAMS.SHORTIES_MAX_DURATION
-    );
-  }
-
-  // Приводим текст поиска и названия фильмов к нижнему регистру
-  const searchTextLower = searchText.toLowerCase();
-
-  // Фильтруем фильмы
-  foundMovies = foundMovies.filter((movie) =>
-    movie.nameRU.toLowerCase().includes(searchTextLower)
-  );
-
-  return foundMovies;
 }
 
 function SavedMovies() {
@@ -152,7 +152,7 @@ function SavedMovies() {
           onCheckboxChange={handleCheckboxChange}
           isBlocked={isLoading}
           defaultSearchText={searchText}
-          defaultAreShortiesSeleted={areMoviesSelected}
+          defaultAreMoviesSelected={areMoviesSelected}
         />
         <SearchResults
           isErrorOnLoading={isErrorOnLoading}

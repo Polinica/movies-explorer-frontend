@@ -9,15 +9,17 @@ import SearchForm from "../SearchForm/SearchForm";
 import More from "../More/More";
 import "./Movies.css";
 import moviesApi from "../../../utils/MoviesApi";
+import { MOVIE_API } from "../../../utils/apiConfig";
+import mainApi from "../../../utils/MainApi";
 
 function Movies() {
   // Функция для фильтрации фильмов
-  function searchMovies(movies, searchText, areShortiesSeleted) {
+  function searchMovies(movies, searchText, areMoviesSelected) {
     if (!movies.length) return movies;
 
     let foundMovies = movies;
 
-    if (!areShortiesSeleted) {
+    if (!areMoviesSelected) {
       foundMovies = foundMovies.filter(
         (movie) => movie.duration > SEARCH_PARAMS.SHORTIES_MAX_DURATION
       );
@@ -37,33 +39,33 @@ function Movies() {
   // Состояния компонента
   const [allMovies, setAllMovies] = useState(null);
   const [searchText, setSearchText] = useState("");
-  const [areShortiesSeleted, setAreShortiesSeleted] = useState(true);
+  const [areMoviesSelected, setAreMoviesSelected] = useState(true);
   const [foundMovies, setFoundMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isErrorOnLoading, setIsErrorOnLoading] = useState(false);
 
   // обрабатывает отправку формы поиска и вызывает функцию
-  // const handleSearchFormSubmit = async ({ searchText, areShortiesSeleted }) => {
+  // const handleSearchFormSubmit = async ({ searchText, areMoviesSelected }) => {
   //   // if (!allMovies) {
   //   setIsLoading(true);
   //   await getMovies();
   //   setIsLoading(false);
   //   //}
-  //   setAreShortiesSeleted(areShortiesSeleted);
+  //   setAreMoviesSelected(areMoviesSelected);
   //   setSearchText(searchText);
   //   if (!allMovies) getMovies();
 
   //   // Сохраните параметры в localStorage
   //   saveToLocalStorage();
   // };
-  const handleSearchFormSubmit = async ({ searchText, areShortiesSeleted }) => {
+  const handleSearchFormSubmit = async ({ searchText, areMoviesSelected }) => {
     setIsLoading(true);
     if (!allMovies) {
       await getMovies();
     }
     setIsLoading(false);
 
-    setAreShortiesSeleted(areShortiesSeleted);
+    setAreMoviesSelected(areMoviesSelected);
     setSearchText(searchText);
 
     // Сохраните параметры в localStorage
@@ -72,7 +74,7 @@ function Movies() {
 
   // Обработчик изменения состояния чекбокса
   const handleCheckboxChange = (value) => {
-    setAreShortiesSeleted(value);
+    setAreMoviesSelected(value);
     if (!allMovies) getMovies();
   };
 
@@ -81,7 +83,8 @@ function Movies() {
     setIsErrorOnLoading(false);
     setIsLoading(true);
     try {
-      const movies = await moviesApi.getMovies();
+      let movies = await moviesApi.getMovies();
+      movies = movies.map(formatMovieData);
       setAllMovies(movies);
     } catch (error) {
       console.error("Ошибка при загрузке фильмов:", error);
@@ -92,14 +95,14 @@ function Movies() {
 
   //В функции getMovies(), после получения фильмов с
   //помощью moviesApi.getMovies(), вы можете устанавливать
-  //фильмы в зависимости от текущих настроек (флажка "areShortiesSeleted"):
+  //фильмы в зависимости от текущих настроек (флажка "areMoviesSelected"):
 
   // async function getMovies() {
   //   setIsErrorOnLoading(false);
   //   setIsLoading(true);
   //   try {
   //     let movies;
-  //     if (areShortiesSeleted) {
+  //     if (areMoviesSelected) {
   //       // Здесь делайте запрос для короткометражных фильмов
   //       movies = await moviesApi.getShortMovies();
   //     } else {
@@ -120,11 +123,11 @@ function Movies() {
       const foundMovies = searchMovies(
         allMovies,
         searchText,
-        areShortiesSeleted
+        areMoviesSelected
       );
       setFoundMovies(foundMovies);
     }
-  }, [searchText, areShortiesSeleted, allMovies]);
+  }, [searchText, areMoviesSelected, allMovies]);
 
   function Message({ text, isError = false }) {
     return (
@@ -143,20 +146,20 @@ function Movies() {
   // Функция для сохранения параметров в localStorage
   function saveToLocalStorage() {
     localStorage.setItem("searchText", searchText);
-    localStorage.setItem("areShortiesSeleted", areShortiesSeleted);
+    localStorage.setItem("areMoviesSelected", areMoviesSelected);
   }
 
   // Функция для загрузки параметров из localStorage
   function loadFromLocalStorage() {
     const savedSearchText = localStorage.getItem("searchText");
-    const savedAreShortiesSeleted = localStorage.getItem("areShortiesSeleted");
+    const savedAreMoviesSelected = localStorage.getItem("areMoviesSelected");
 
     if (savedSearchText) {
       setSearchText(savedSearchText);
     }
 
-    if (savedAreShortiesSeleted) {
-      setAreShortiesSeleted(savedAreShortiesSeleted === "true");
+    if (savedAreMoviesSelected) {
+      setAreMoviesSelected(savedAreMoviesSelected === "true");
     }
   }
 
@@ -199,39 +202,83 @@ function Movies() {
   const [savedMovies, setSavedMovies] = useState([]);
 
   // Сохранение фильмов
-  function handleCardClick(movieId) {
-    const isSaved = savedMovies.some((savedMovie) => savedMovie.id === movieId);
-    if (isSaved) {
-      deleteSavedMovie(movieId);
-    } else {
-      addSavedMovie(movieId);
-    }
+  async function handleCardClick(movie) {
     console.log(savedMovies);
+    const isSaved = savedMovies.some(
+      (savedMovie) => savedMovie.movieId === movie.movieId
+    );
+    if (isSaved) {
+      const savedMovie = savedMovies.find(
+        (savedMovie) => savedMovie.movieId === movie.movieId
+      );
+      await deleteSavedMovie(savedMovie);
+    } else {
+      await addSavedMovie(movie);
+    }
+    // console.log(savedMovies);
   }
 
-  function deleteSavedMovie(movieId) {
-    setSavedMovies((movies) => movies.filter((movie) => movie.id !== movieId));
+  async function deleteSavedMovie(movie) {
+    try {
+      await mainApi.deleteMovie(movie._id);
+      setSavedMovies((movies) =>
+        movies.filter((savedMovie) => savedMovie.id !== movie._id)
+      );
+    } catch (err) {
+      console.error(err);
+    }
   }
 
-  function addSavedMovie(movieId) {
-    setSavedMovies((movies) => [
-      ...movies,
-      allMovies.find((movie) => movie.id === movieId),
-    ]);
+  async function addSavedMovie(movie) {
+    try {
+      const savedMovie = await mainApi.saveMovie(movie);
+      if (savedMovie) {
+        setSavedMovies((movies) => [...movies, savedMovie]);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    getSavedMovies();
+  }, []);
+
+  async function getSavedMovies() {
+    try {
+      const movies = await mainApi.getSavedMovies();
+      setSavedMovies(movies);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  function formatMovieData(movie) {
+    return {
+      country: movie.country,
+      director: movie.director,
+      duration: movie.duration,
+      year: movie.year,
+      description: movie.description,
+      image: MOVIE_API.MEDIA_BASE_URL + movie.image.url,
+      trailerLink: movie.trailerLink,
+      thumbnail: MOVIE_API.MEDIA_BASE_URL + movie.image.formats.thumbnail.url,
+      movieId: movie.id,
+      nameRU: movie.nameRU,
+      nameEN: movie.nameEN,
+    };
   }
 
   return (
     <>
-      <Header>
-        <Navigation />
-      </Header>
+      <Header />
       <main aria-label="Поиск фильмов">
         <SearchForm
           onSubmit={handleSearchFormSubmit}
           onCheckboxChange={handleCheckboxChange}
           isBlocked={isLoading}
           defaultSearchText={searchText}
-          defaultAreShortiesSelected={areShortiesSeleted}
+          defaultAreShortiesSelected={areMoviesSelected}
         />
         {/* <MoviesCardList type="all" movies={foundMovies} /> */}
         {/* <More /> */}

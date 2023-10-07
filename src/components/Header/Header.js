@@ -1,9 +1,14 @@
+import React, { useContext } from "react";
 import "./Header.css";
 import logo from "../../images/logo.svg";
 import { NavLink } from "react-router-dom";
 import classNames from "classnames";
+import CurrentUserContext from "../../context/CurrentUserContext";
+import AuthLinks from "../AuthLinks/AuthLinks";
+import Navigation from "../Navigation/Navigation";
 
-function Header({ children, isThemed = false }) {
+function Header({ isThemed = false }) {
+  const currentUser = useContext(CurrentUserContext);
   return (
     // <header className={`header section${isThemed ? " header_themed" : ""}`}>
     <header
@@ -22,7 +27,7 @@ function Header({ children, isThemed = false }) {
           src={logo}
         />
       </NavLink>
-      {children}
+      {currentUser ? <Navigation isThemed={isThemed} /> : <AuthLinks />}
     </header>
   );
 }

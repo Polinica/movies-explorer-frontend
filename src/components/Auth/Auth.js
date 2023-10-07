@@ -2,7 +2,16 @@ import "./Auth.css";
 import logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 
-function Auth({ title, hint, buttonText, children, isValid, requestError }) {
+function Auth({
+  title,
+  hint,
+  buttonText,
+  children,
+  isValid,
+  requestError,
+  onSubmit,
+  isLoading,
+}) {
   // const MODES = {
   //   register: {
   //     title: "Добро пожаловать!",
@@ -41,7 +50,7 @@ function Auth({ title, hint, buttonText, children, isValid, requestError }) {
           />
         </Link>
         <h1 className="auth__title">{title}</h1>
-        <form className="auth__form" noValidate>
+        <form className="auth__form" noValidate onSubmit={onSubmit}>
           {children}
           <p className="auth__request-error">{requestError}</p>
           <button
@@ -49,6 +58,7 @@ function Auth({ title, hint, buttonText, children, isValid, requestError }) {
             className="auth__submit-button"
             type="submit"
             isDisabled={!isValid}
+            isLoading={isLoading}
           >
             Зарегистрироваться
           </button>

@@ -1,6 +1,6 @@
 import "./CardButton.css";
 
-function createCardButton({ className, alt, text, onClick }) {
+function createCardButton({ className, alt, text, onClick, disabled }) {
   const buttonClass = `card-button ${className} movie-card__button`;
 
   return (
@@ -9,22 +9,37 @@ function createCardButton({ className, alt, text, onClick }) {
       type="button"
       aria-label={alt}
       onClick={onClick}
+      disabled={disabled}
     ></button>
   );
 }
 
-export function WorkCardButton({ isSaved, onClick }) {
+export function WorkCardButton({ isSaved, onClick, disabled }) {
   const className = isSaved ? "card-button_type_done" : "card-button_type_save";
   const alt = isSaved ? "Удалить фильм из сохраненных" : "";
 
-  return createCardButton({ className, alt, onClick });
+  return (
+    <createCardButton
+      className={className}
+      alt={alt}
+      onClick={onClick}
+      disabled={disabled}
+    />
+  );
 }
 
-export function SavedCardButton({ onClick }) {
+export function SavedCardButton({ onClick, disabled }) {
   const className = "card-button_type_delete";
   const alt = "Удалить фильм из сохраненных";
 
-  return createCardButton({ className, alt, onClick });
+  return (
+    <createCardButton
+      className={className}
+      alt={alt}
+      onClick={onClick}
+      disabled={disabled}
+    />
+  );
 }
 
 //-----------------------------------

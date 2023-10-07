@@ -1,11 +1,16 @@
 import "./MoviesCard.css";
+import { useState } from "react";
 import { WorkCardButton } from "../CardButton/CardButton";
 import { MOVIE_API } from "../../../utils/apiConfig";
 import { SavedCardButton } from "../CardButton/CardButton";
 
-function MoviesCard({ movieData, isSaved, onClick, isSavedMovieCard = false }) {
-  function handleClick() {
-    onClick(movieData.id);
+function MoviesCard({ movie, isSaved, onClick, isSavedMovieCard = false }) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleClick() {
+    setIsLoading(true);
+    await onClick(movie);
+    setIsLoading(false);
   }
 
   // function MoviesCard({ movieData, isSaved, onClick }) {
@@ -30,17 +35,21 @@ function MoviesCard({ movieData, isSaved, onClick, isSavedMovieCard = false }) {
   return (
     <li className="movie-card">
       <img
-        src={MOVIE_API.MEDIA_BASE_URL + movieData.image.url}
-        alt={`Кадр из фильма ${movieData.name}`}
+        src={movie.image}
+        alt={`Кадр из фильма ${movie.name}`}
         className="movie-card__thumbnail"
       />
       <div className="cards__text">
         <div className="cards__tex-row">
-          <h3 className="movie-card__name">{movieData.nameRU}</h3>
+          <h3 className="movie-card__name">{movie.nameRU}</h3>
           {isSavedMovieCard ? (
-            <SavedCardButton onClick={handleClick} />
+            <SavedCardButton onClick={handleClick} disabled={isLoading} />
           ) : (
-            <WorkCardButton isSaved={isSaved} onClick={handleClick} />
+            <WorkCardButton
+              isSaved={isSaved}
+              onClick={handleClick}
+              disabled={isLoading}
+            />
           )}
           {/* <WorkCardButton isSaved={isSaved} onClick={handleClick} /> */}
         </div>

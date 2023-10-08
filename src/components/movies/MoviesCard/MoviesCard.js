@@ -4,37 +4,33 @@ import { WorkCardButton } from "../CardButton/CardButton";
 import { MOVIE_API } from "../../../utils/apiConfig";
 import { SavedCardButton } from "../CardButton/CardButton";
 
+// Функция для форматирования времени
+function getMovieDuration(mins) {
+  return `${Math.floor(mins / 60)}ч ${mins % 60}м`;
+}
+
 function MoviesCard({ movie, isSaved, onClick, isSavedMovieCard = false }) {
   function handleClick() {
     onClick(movie);
   }
 
-  // function MoviesCard({ movieData, isSaved, onClick }) {
-  //   // TESTING BUTTON CLICK
-  //   const [isSaved, setIsSaved] = React.useState(false);
+  const movieDuration = getMovieDuration(movie.duration); // Форматирование длительности
 
-  //   const type = "all";
-
-  //   function handleClickSave() {
-  //     setIsSaved((state) => !state);
-  //   }
-  //   const ref = React.useRef();
-  //   function handleClickDelete() {
-  //     setIsSaved(false);
-  //     ref.current.remove();
-  //   }
-
-  //   function handleClick() {
-  //     onClick(movieData.id);
-  //   }
-
+  
   return (
     <li className="movie-card">
-      <img
-        src={movie.image}
-        alt={`Кадр из фильма ${movie.name}`}
-        className="movie-card__thumbnail"
-      />
+      <a
+        href={movie.trailerLink}
+        className="movie-card__link"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img
+          src={movie.image}
+          alt={`Кадр из фильма ${movie.name}`}
+          className="movie-card__thumbnail"
+        />
+      </a>
       <div className="cards__text">
         <div className="cards__tex-row">
           <h3 className="movie-card__name">{movie.nameRU}</h3>
@@ -45,7 +41,7 @@ function MoviesCard({ movie, isSaved, onClick, isSavedMovieCard = false }) {
           )}
         </div>
         <div className="cards__tex-row">
-          <p className="movie-card__duration">1ч42м</p>
+          <p className="movie-card__duration">{movieDuration}</p>
         </div>
       </div>
     </li>

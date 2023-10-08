@@ -60,17 +60,19 @@ function MoviesCardList({
     setRenderedMovies(array);
   }
 
-  function Message({ text, isError = false }) {
-    const messageClasses = `message__text ${
-      isError ? "message__text_type_error" : ""
-    }`;
-
-    return (
-      <div className="message section">
-        <p className={messageClasses}>{text}</p>
-      </div>
-    );
-  }
+  // function Message({ text, isError = false }) {
+  //   return (
+  //     <div className="message section">
+  //       <p
+  //         className={`message__text ${
+  //           isError ? "message__text_type_error" : ""
+  //         }`}
+  //       >
+  //         {text}
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
   function checkIsMovieSaved(movie) {
     if (Array.isArray(savedMovies)) {
@@ -83,27 +85,23 @@ function MoviesCardList({
 
   return (
     <>
-      {movies.length === 0 ? (
-        <Message text="Ничего не найдено" />
-      ) : (
-        <ul
-          className="movie-card-list section"
-          aria-label="Список фильмов"
-          ref={grid}
-        >
-          {renderedMovies.map((movie) => {
-            return (
-              <MoviesCard
-                movie={movie}
-                isSaved={checkIsMovieSaved(movie)}
-                onClick={onCardClick}
-                key={movie.movieId}
-                isSavedMovieCard={isSavedMoviesCardList}
-              />
-            );
-          })}
-        </ul>
-      )}
+      <ul
+        className="movie-card-list section"
+        aria-label="Список фильмов"
+        ref={grid}
+      >
+        {renderedMovies.map((movie) => {
+          return (
+            <MoviesCard
+              movie={movie}
+              isSaved={checkIsMovieSaved(movie)}
+              onClick={onCardClick}
+              key={movie.movieId}
+              isSavedMovieCard={isSavedMoviesCardList}
+            />
+          );
+        })}
+      </ul>
       {/* Уберите проверку на renderedMovies.length */}
       {/* Это отключит кнопку "More" */}
       {/* {renderedMovies.length < movies.length && (

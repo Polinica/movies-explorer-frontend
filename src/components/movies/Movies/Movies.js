@@ -14,25 +14,6 @@ import {
   SEARCH_PARAMS,
 } from "../../../utils/apiConfig";
 
-// Функция для фильтрации фильмов
-function searchMovies(movies, searchText, areMoviesSelected) {
-  if (!movies.length) return movies;
-
-  let foundMovies = movies;
-
-  if (!areMoviesSelected) {
-    foundMovies = foundMovies.filter(
-      (movie) => movie.duration > SEARCH_PARAMS.SHORTIES_MAX_DURATION
-    );
-  }
-
-  foundMovies = foundMovies.filter((movie) =>
-    movie.nameRU.toLowerCase().includes(searchText.toLowerCase())
-  );
-
-  return foundMovies;
-}
-
 function Message({ text, isError = false }) {
   return (
     <div className="message section">
@@ -45,12 +26,61 @@ function Message({ text, isError = false }) {
   );
 }
 
+const ERROR_MSGS = {
+  NOT_FOUND: "Ничего не найдено",
+  CANT_GET_MOVIES:
+    "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
+};
+
+function SearchResults({
+  isErrorOnLoading,
+  isLoading,
+  movies,
+  savedMovies,
+  onCardClick,
+  isSavedMoviesSearchResult = false,
+}) {
+  return isErrorOnLoading ? (
+    <Message text={ERROR_MSGS.CANT_GET_MOVIES} isError />
+  ) : isLoading ? (
+    <Preloader />
+  ) : movies.length === 0 ? (
+    <Message text={ERROR_MSGS.NOT_FOUND} />
+  ) : (
+    <MoviesCardList
+      movies={movies}
+      savedMovies={savedMovies}
+      onCardClick={onCardClick}
+      isSavedMoviesCardList={isSavedMoviesSearchResult}
+    />
+  );
+}
+
+// Функция для фильтрации фильмов
+function searchMovies(movies, searchText, areMoviesSelected) {
+  if (!movies.length) return movies;
+
+  let foundMovies = movies;
+
+  if (areMoviesSelected) {
+    foundMovies = foundMovies.filter(
+      (movie) => movie.duration <= SEARCH_PARAMS.SHORTIES_MAX_DURATION
+    );
+  }
+
+  foundMovies = foundMovies.filter((movie) =>
+    movie.nameRU.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  return foundMovies;
+}
+
 function Movies() {
   const [allMovies, setAllMovies] = useState(null);
   const [savedMovies, setSavedMovies] = useState([]);
   const defaultSearchText = localStorage.getItem("searchText") || "";
   const defaultAreMoviesSelected =
-    JSON.parse(localStorage.getItem("areMoviesSelected")) || true;
+    JSON.parse(localStorage.getItem("areMoviesSelected")) || false;
   const defaultFoundMovies =
     JSON.parse(localStorage.getItem("foundMovies")) || [];
 
@@ -163,14 +193,16 @@ function Movies() {
           defaultSearchText={searchText}
           defaultAreMoviesSelected={areMoviesSelected}
         />
-        {searchText && (
-          <MoviesCardList
+        {searchText || foundMovies.length > 0 ? (
+          <SearchResults
             isErrorOnLoading={isErrorOnLoading}
             isLoading={isLoading}
             movies={foundMovies}
             savedMovies={savedMovies}
             onCardClick={handleCardClick}
           />
+        ) : (
+          <Message text={ERROR_MSGS.NOT_FOUND} />
         )}
         {/* {isErrorOnLoading && (
           <Message text="Ошибка при загрузке фильмов" isError />

@@ -16,8 +16,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "set PUBLIC_URL=/movies-explorer-frontend&&npm run build",
-    "deploy": "set PUBLIC_URL=/movies-explorer-frontend&&gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "npm run build&&scp -r ./build/* pika@84.201.176.99:/home/pika/frontend/new4",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },

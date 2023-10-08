@@ -14,9 +14,9 @@ function searchMovies(movies, searchText, areMoviesSelected) {
 
   let foundMovies = movies;
 
-  if (!areMoviesSelected) {
+  if (areMoviesSelected) {
     foundMovies = foundMovies.filter(
-      (movie) => movie.duration > SEARCH_PARAMS.SHORTIES_MAX_DURATION
+      (movie) => movie.duration <= SEARCH_PARAMS.SHORTIES_MAX_DURATION
     );
   }
 
@@ -82,7 +82,7 @@ function SavedMovies() {
 
   const [foundMovies, setFoundMovies] = React.useState([]);
   const [searchText, setSearchText] = React.useState("");
-  const [areMoviesSelected, setAreMoviesSelected] = React.useState(true);
+  const [areMoviesSelected, setAreMoviesSelected] = React.useState(false);
 
   React.useEffect(() => {
     getSavedMovies();

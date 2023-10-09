@@ -2,9 +2,11 @@
 
 Репозиторий для фронтенд-части приложения с интерфейсом на React
 
-https://polinica.github.io/movies-explorer-frontend/
+https://pika.nomoredomainsicu.ru/
 
 ## Приложение Movies Explorer
+
+https://pika.nomoredomainsicu.ru/
 
 Приложение Movies Explorer - сервис с поиском фильмов и сохранением их в личном кабинете. Учебный проект Яндекс.Практикум х BeatFilm.
 
@@ -15,7 +17,7 @@ https://polinica.github.io/movies-explorer-frontend/
 Полностью приложение состоит из двух частей:
 
 1. [movies-explorer (бэкенд-часть)](https://github.com/Polinica/movies-explorer-api)
-2. movies-explorer (фронтенд-часть) ⬅ _этот репозиторий_
+2. movies-explorer (фронтенд-часть) ⬅ _этот репозиторий_ / https://pika.nomoredomainsicu.ru/
 
 ## Макет в Figma
 

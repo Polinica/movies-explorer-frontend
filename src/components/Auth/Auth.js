@@ -13,33 +13,6 @@ function Auth({
   onSubmit,
   isLoading,
 }) {
-  // const MODES = {
-  //   register: {
-  //     title: "Добро пожаловать!",
-  //     hint: (
-  //       <p className="auth__hint">
-  //         Уже зарегистрированы?{" "}
-  //         <Link to="/signin" className="auth__hint-link">
-  //           Войти
-  //         </Link>
-  //       </p>
-  //     ),
-  //     buttonText: "Зарегистрироваться",
-  //   },
-  //   login: {
-  //     title: "Рады видеть!",
-  //     hint: (
-  //       <p className="auth__hint">
-  //         Ещё не зарегистрированы?{" "}
-  //         <Link to="/signup" className="auth__hint-link">
-  //           Регистрация
-  //         </Link>
-  //       </p>
-  //     ),
-  //     buttonText: "Войти",
-  //   },
-  // };
-
   return (
     <main className="auth content__stretched-element">
       <div className="auth__container">

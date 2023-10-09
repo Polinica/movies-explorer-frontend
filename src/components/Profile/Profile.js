@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./Profile.css";
 import Header from "../Header/Header";
 import CurrentUserContext from "../../context/CurrentUserContext";
@@ -23,7 +23,7 @@ function Profile({ onLogout, onUpdate }) {
     setIsInEditMode((state) => !state);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       values.name === currentUser.name &&
       values.email === currentUser.email
@@ -60,7 +60,6 @@ function Profile({ onLogout, onUpdate }) {
   const nameToDisplay = isInEditMode
     ? values.name
     : currentUser?.name ?? "Виталий";
-  const emailToDisplay = isInEditMode ? values.email : currentUser?.email ?? "";
 
   return (
     <>

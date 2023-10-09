@@ -26,31 +26,24 @@ export function useFormWithValidation() {
   const [isValid, setIsValid] = useState(false);
 
   const handleChangeInput = (event) => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
+    const { name, value } = event.target;
 
-    if (name === "name" && target.validity.patternMismatch) {
-      target.setCustomValidity(
+    if (name === "name" && event.target.validity.patternMismatch) {
+      event.target.setCustomValidity(
         "Имя должно содержать только латиницу, кириллицу, пробел или дефис."
       );
+    } else if (name === "email" && !isEmail(value)) {
+      event.target.setCustomValidity("Некорректый адрес почты.");
     } else {
-      target.setCustomValidity("");
+      event.target.setCustomValidity("");
     }
 
-    if (name === "email") {
-      if (!isEmail(value)) {
-        target.setCustomValidity("Некорректый адрес почты.");
-      } else {
-        target.setCustomValidity("");
-      }
-    }
-
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form").checkValidity());
-
-    // console.log('isValid = ', isValid);
+    setValues((prevValues) => ({ ...prevValues, [name]: value }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: event.target.validationMessage,
+    }));
+    setIsValid(event.target.closest("form").checkValidity());
   };
 
   const resetForm = useCallback(
@@ -59,7 +52,7 @@ export function useFormWithValidation() {
       setErrors(newErrors);
       setIsValid(newIsValid);
     },
-    [setValues, setErrors, setIsValid]
+    [] // Убраны лишние зависимости
   );
 
   return { values, handleChangeInput, errors, isValid, resetForm };

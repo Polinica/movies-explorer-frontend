@@ -18,45 +18,27 @@ function SearchForm({
 
   // eslint-disable-next-line no-unused-vars
   const [values, errors, isValid, handleChange] = useForm(defaultValues);
-
-  // const DEFAULT_VALUES = { searchText: "", showShorties: true };
-  // const form = useRef();
-  // const [inputValues, setInputValues] = useState(defaultValues);
-  // const [isValid, setIsValid] = useState(false);
-  // const [isErrorShown, setIsErrorShown] = useState(false);
   const [errorText, setErrorText] = useState("");
 
-  //Функция handleChange обрабатывает изменения в полях формы и обновляет состояние inputValues.
-  // function handleChange(event) {
-  //   const input = event.target;
-  //   const name = input.name;
-  //   let value;
-  //   if (input.type === "checkbox") {
-  //     value = input.checked;
-  //     onCheckboxChange(value);
-  //   } else {
-  //     value = input.value;
-  //   }
-  //   setInputValues((state) => ({ ...state, [name]: value }));
-  //   validateForm();
-  // }
-
-  // function validateForm() {
-  //   setIsValid(form.current.checkValidity());
-  // }
-
+  // Функция useEffect вызывается, когда меняется состояние areMoviesSelected.
+  // Если это произошло, то вызывается переданная в props функция onCheckboxChange.
   useEffect(() => {
     if (values.areMoviesSelected !== defaultAreMoviesSelected) {
       onCheckboxChange(values.areMoviesSelected);
     }
   }, [values.areMoviesSelected, onCheckboxChange, defaultAreMoviesSelected]);
 
+  // Функция useEffect вызывается, когда изменяется состояние валидации.
+  // Если значения валидны, то текст ошибки очищается.
   useEffect(() => {
     if (isValid) {
       setErrorText("");
     }
   }, [isValid]);
 
+  // Функция handleSubmit вызывается при нажатии кнопки отправки формы.
+  // Если данные не прошли проверку, то устанавливается текст ошибки.
+  // В противном случае вызывается переданный в props обработчик onSubmit.
   function handleSubmit(event) {
     event.preventDefault();
     if (!isValid) {

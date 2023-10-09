@@ -6,20 +6,25 @@ import AuthInputForName from "../AuthInputForName/AuthInputForName";
 import AuthInputForPassword from "../AuthInputForPassword/AuthInputForPassword";
 import mainApi from "../../../utils/MainApi";
 
+// Константы для повторяющихся текстовых полей
 const TITLE = "Добро пожаловать!";
 const HINT_TEXT = "Уже зарегистрированы?";
 const HINT_LINK_TEXT = "Войти";
 const BUTTON_TEXT = "Зарегистрироваться";
+
+// Маппинг ошибок, которые могут прийти от сервера
 const REQUEST_ERRORS = {
   SIGNUP_409: "Пользователь с таким email уже существует.",
   SIGNUP_DEFAULT: "При регистрации пользователя произошла ошибка.",
 };
 
+// Хук для управления стейтом формы
 function useForm(initialValues = {}) {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
+  // Обработчик ввода в поля формы
   function handleInputChange(event) {
     const { name, value, type, checked } = event.target;
     setValues({ ...values, [name]: type === "checkbox" ? checked : value });
@@ -30,6 +35,7 @@ function useForm(initialValues = {}) {
   return [values, errors, isValid, handleInputChange];
 }
 
+// Подсказка для пользователя
 const hint = (
   <p className="auth__hint">
     {HINT_TEXT}{" "}
@@ -44,31 +50,28 @@ const Register = ({ onLogin }) => {
   const [requestError, setRequestError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Обработчик отправки формы
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     setRequestError("");
+
     try {
       await mainApi.register(values);
       const { email, password } = values;
-      const res = await mainApi.login({
-        email,
-        password,
-      });
+
+      const res = await mainApi.login({ email, password });
+
       if (res.token) {
         onLogin(res);
       }
     } catch (err) {
-      let message;
-      switch (err.message) {
-        case "409":
-          message = REQUEST_ERRORS.SIGNUP_409;
-          break;
-        default:
-          message = REQUEST_ERRORS.SIGNUP_DEFAULT;
-      }
-      setRequestError(message);
+      // Обработка ошибок, полученных от сервера
+      setRequestError(
+        REQUEST_ERRORS[err.message] || REQUEST_ERRORS.SIGNUP_DEFAULT
+      );
     }
+
     setIsLoading(false);
   };
 
@@ -103,5 +106,4 @@ const Register = ({ onLogin }) => {
     </Auth>
   );
 };
-
 export default Register;

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import mainApi from "../../../utils/MainApi";
 import Footer from "../../Footer/Footer";
 import Header from "../../Header/Header";
@@ -75,16 +75,16 @@ function SearchResults({
 
 function SavedMovies() {
   // Сохраненные фильмы
-  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isErrorOnLoading, setIsErrorOnLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isErrorOnLoading, setIsErrorOnLoading] = useState(false);
 
-  const [foundMovies, setFoundMovies] = React.useState([]);
-  const [searchText, setSearchText] = React.useState("");
-  const [areMoviesSelected, setAreMoviesSelected] = React.useState(false);
+  const [foundMovies, setFoundMovies] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [areMoviesSelected, setAreMoviesSelected] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getSavedMovies();
   }, []);
 
@@ -112,7 +112,7 @@ function SavedMovies() {
     setAreMoviesSelected(value);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (savedMovies) {
       const foundMovies = searchMovies(
         savedMovies,

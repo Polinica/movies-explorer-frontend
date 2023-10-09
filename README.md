@@ -17,7 +17,7 @@ https://pika.nomoredomainsicu.ru/
 Полностью приложение состоит из двух частей:
 
 1. [movies-explorer (бэкенд-часть)](https://github.com/Polinica/movies-explorer-api)
-2. movies-explorer (фронтенд-часть) ⬅ _этот репозиторий_ / https://pika.nomoredomainsicu.ru/
+2. movies-explorer (фронтенд-часть) ⬅ _этот репозиторий_ / ссылка на пулреквест https://github.com/Polinica/movies-explorer-frontend/pull/3#issue-1933918487
 
 ## Макет в Figma
 

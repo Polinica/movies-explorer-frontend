@@ -1,19 +1,5 @@
 import { MAIN_API } from "./apiConfig";
 
-class Api {
-  constructor({ baseUrl }) {
-    this.baseUrl = baseUrl;
-  }
-
-  _checkResult(res) {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  }
-}
-
 class MainApi {
   /**
    * Отвечает за осуществление и обработку сетевых запросов к серверу
@@ -26,6 +12,15 @@ class MainApi {
     this._authHeaders = authHeaders;
   }
 
+  async _handleResponse(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+      const errorData = await res.json();
+      return Promise.reject(errorData);
+    }
+  }
+
   async register({ email, password, name }) {
     const url = `${this._baseUrl}/signup`;
 
@@ -36,10 +31,12 @@ class MainApi {
       },
       body: JSON.stringify({ email, password, name }),
     });
-    if (!res.ok) return new Error(res.status);
-    const data = await res.json();
-
-    return data;
+    if (res.ok) {
+      return this._handleResponse(res); // Возвращаем данные при успешной авторизации
+    } else {
+      const errorData = await res.json(); // Получение данных об ошибке
+      return Promise.reject(errorData); // Возвращаем данные об ошибке
+    }
   }
 
   async login({ email, password }) {
@@ -52,11 +49,12 @@ class MainApi {
       },
       body: JSON.stringify({ email, password }),
     });
-    if (!res.ok) return new Error(res.status);
-
-    const data = await res.json();
-
-    return data;
+    if (res.ok) {
+      return this._handleResponse(res); // Возвращаем данные при успешной авторизации
+    } else {
+      const errorData = await res.json(); // Получение данных об ошибке
+      return Promise.reject(errorData); // Возвращаем данные об ошибке
+    }
   }
 
   setToken(token) {
@@ -70,11 +68,12 @@ class MainApi {
     const res = await fetch(url, {
       headers,
     });
-    if (!res.ok) return new Error(res.status);
-
-    const data = await res.json();
-
-    return data;
+    if (res.ok) {
+      return this._handleResponse(res); // Возвращаем данные при успешной авторизации
+    } else {
+      const errorData = await res.json(); // Получение данных об ошибке
+      return Promise.reject(errorData); // Возвращаем данные об ошибке
+    }
   }
 
   async getUserInfo() {
@@ -83,11 +82,12 @@ class MainApi {
     const res = await fetch(url, {
       headers: this._authHeaders,
     });
-    if (!res.ok) return new Error(res.status);
-
-    const data = await res.json();
-
-    return data;
+    if (res.ok) {
+      return this._handleResponse(res); // Возвращаем данные при успешной авторизации
+    } else {
+      const errorData = await res.json(); // Получение данных об ошибке
+      return Promise.reject(errorData); // Возвращаем данные об ошибке
+    }
   }
 
   async updateUserInfo({ name, email }) {
@@ -98,11 +98,12 @@ class MainApi {
       headers: this._authHeaders,
       body: JSON.stringify({ name, email }),
     });
-    if (!res.ok) return new Error(res.status);
-
-    const data = await res.json();
-
-    return data;
+    if (res.ok) {
+      return this._handleResponse(res); // Возвращаем данные при успешной авторизации
+    } else {
+      const errorData = await res.json(); // Получение данных об ошибке
+      return Promise.reject(errorData); // Возвращаем данные об ошибке
+    }
   }
 
   async getSavedMovies() {
@@ -111,11 +112,12 @@ class MainApi {
     const res = await fetch(url, {
       headers: this._authHeaders,
     });
-    if (!res.ok) return new Error(res.status);
-
-    const data = await res.json();
-
-    return data;
+    if (res.ok) {
+      return this._handleResponse(res); // Возвращаем данные при успешной авторизации
+    } else {
+      const errorData = await res.json(); // Получение данных об ошибке
+      return Promise.reject(errorData); // Возвращаем данные об ошибке
+    }
   }
 
   async saveMovie(movieData) {
@@ -127,11 +129,12 @@ class MainApi {
       headers: this._authHeaders,
       body: JSON.stringify(movieData),
     });
-    if (!res.ok) return new Error(res.status);
-
-    const data = await res.json();
-
-    return data;
+    if (res.ok) {
+      return this._handleResponse(res); // Возвращаем данные при успешной авторизации
+    } else {
+      const errorData = await res.json(); // Получение данных об ошибке
+      return Promise.reject(errorData); // Возвращаем данные об ошибке
+    }
   }
 
   async deleteMovie(id) {
@@ -141,11 +144,12 @@ class MainApi {
       method: "DELETE",
       headers: this._authHeaders,
     });
-    if (!res.ok) return new Error(res.status);
-
-    const data = await res.json();
-
-    return data;
+    if (res.ok) {
+      return this._handleResponse(res); // Возвращаем данные при успешной авторизации
+    } else {
+      const errorData = await res.json(); // Получение данных об ошибке
+      return Promise.reject(errorData); // Возвращаем данные об ошибке
+    }
   }
 }
 

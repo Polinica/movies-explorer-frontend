@@ -19,6 +19,8 @@ function Profile({ onLogout, onUpdate }) {
 
   const [areSameValues, setAreSameValues] = useState(true);
 
+  const [isSuccessful, setIsSuccessful] = useState(false);
+
   function switchEditMode() {
     setIsInEditMode((state) => !state);
   }
@@ -34,14 +36,21 @@ function Profile({ onLogout, onUpdate }) {
     setAreSameValues(false);
   }, [values, currentUser]);
 
+  function showSuccessMessage() {
+    setIsSuccessful(true);
+    setTimeout(() => setIsSuccessful(false), 2000);
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
     setRequestError("");
+    setIsSuccessful(false);
     try {
       const res = await mainApi.updateUserInfo(values);
       onUpdate(res);
       switchEditMode();
+      showSuccessMessage();
     } catch (err) {
       console.log(err);
       let message;
@@ -67,6 +76,9 @@ function Profile({ onLogout, onUpdate }) {
       <main className="profile content__stretched-element">
         <div className="profile__container">
           <h1 className="profile__title">{`Привет, ${nameToDisplay}!`}</h1>
+          <p className="profile__save-message">
+            {isSuccessful && "Профиль успешно сохранен!"}
+          </p>
           <form className="profile__form" noValidate onSubmit={handleSubmit}>
             <label className="profile__input-container">
               <span className="profile__input-label">Имя</span>

@@ -5,6 +5,7 @@ import AuthInputForEmail from "../AuthInputForEmail/AuthInputForEmail";
 import AuthInputForName from "../AuthInputForName/AuthInputForName";
 import AuthInputForPassword from "../AuthInputForPassword/AuthInputForPassword";
 import mainApi from "../../../utils/MainApi";
+import isEmail from "validator/lib/isEmail";
 
 // Константы для повторяющихся текстовых полей
 const TITLE = "Добро пожаловать!";
@@ -24,15 +25,29 @@ function useForm(initialValues = {}) {
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
-  // Обработчик ввода в поля формы
-  function handleInputChange(event) {
-    const { name, value, type, checked } = event.target;
-    setValues({ ...values, [name]: type === "checkbox" ? checked : value });
-    setErrors({ ...errors, [name]: event.target.validationMessage });
-    setIsValid(event.target.closest("form").checkValidity());
+  function validateInputValue(inputType, value) {
+    if (inputType === "email") {
+      const ERROR_MSG =
+        "Адрес почты должен быть валидным и содержать домен первого уровня.";
+      return isEmail(value) ? "" : ERROR_MSG;
+    }
+    return "";
   }
 
-  return [values, errors, isValid, handleInputChange];
+  function handleChange(event) {
+    const input = event.target;
+    const name = input.name;
+    const value = input.type === "checkbox" ? input.checked : input.value;
+    const errorMessage = validateInputValue(input.type, value);
+
+    setErrors((errors) => ({ ...errors, [name]: errorMessage }));
+    input.setCustomValidity(errorMessage);
+
+    setValues((values) => ({ ...values, [name]: value }));
+    setIsValid(input.closest("form").checkValidity());
+  }
+
+  return [values, errors, isValid, handleChange];
 }
 
 // Подсказка для пользователя

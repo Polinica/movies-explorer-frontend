@@ -3,11 +3,10 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 import More from "../More/More";
 
-const DEVICE_SETTINGS = {
-  wide: { breakpoint: 1280, config: { show: 12, add: 4 } },
-  medium: { breakpoint: 767, config: { show: 8, add: 2 } },
-  narrow: { breakpoint: 480, config: { show: 5, add: 2 } },
-  default: { config: { show: 9, add: 3 } },
+let DEVICE_SETTINGS = {
+  wide: { min: 1280, max: 2560, config: { show: 16, add: 4 } },
+  medium: { min: 768, max: 1280, config: { show: 8, add: 2 } },
+  narrow: { min: 320, max: 767, config: { show: 5, add: 2 } },
 };
 
 function MoviesCardList({
@@ -19,19 +18,26 @@ function MoviesCardList({
   const [renderedMovies, setRenderedMovies] = useState([]);
   const grid = useRef();
   const [cardSettings, setCardSettings] = useState(
-    DEVICE_SETTINGS.default.config
+    DEVICE_SETTINGS.narrow.config // Измените на желаемое значение по умолчанию
   );
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
   const updateCardSettings = (width) => {
-    if (width >= DEVICE_SETTINGS.wide.breakpoint) {
+    if (
+      width >= DEVICE_SETTINGS.wide.min &&
+      width <= DEVICE_SETTINGS.wide.max
+    ) {
       setCardSettings(DEVICE_SETTINGS.wide.config);
-    } else if (width > DEVICE_SETTINGS.medium.breakpoint) {
+    } else if (
+      width >= DEVICE_SETTINGS.medium.min &&
+      width <= DEVICE_SETTINGS.medium.max
+    ) {
       setCardSettings(DEVICE_SETTINGS.medium.config);
-    } else if (width > DEVICE_SETTINGS.narrow.breakpoint) {
+    } else if (
+      width >= DEVICE_SETTINGS.narrow.min &&
+      width <= DEVICE_SETTINGS.narrow.max
+    ) {
       setCardSettings(DEVICE_SETTINGS.narrow.config);
-    } else {
-      setCardSettings(DEVICE_SETTINGS.default.config);
     }
   };
 
@@ -94,11 +100,6 @@ function MoviesCardList({
           );
         })}
       </ul>
-      {/* Уберите проверку на renderedMovies.length */}
-      {/* Это отключит кнопку "More" */}
-      {/* {renderedMovies.length < movies.length && (
-        <More onClick={handleMoreClick} />
-      )} */}
       {renderedMovies.length < movies.length && (
         <More onClick={handleMoreClick} />
       )}

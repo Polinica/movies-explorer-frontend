@@ -185,6 +185,8 @@ function Movies() {
         }
       }
     } catch (err) {
+      //console.error(err);
+      setSavedMovies((movies) => [...movies, movie]);
       console.error(err);
     }
   }

@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import React, { useState, useContext, useEffect } from "react";
 import "./Profile.css";
 import Header from "../Header/Header";
@@ -84,14 +83,13 @@ function Profile({ onLogout, onUpdate }) {
               <span className="profile__input-label">Имя</span>
               <input
                 type="text"
-                className={classNames("profile__input", {
-                  profile__input_type_error: errors.name,
-                })}
+                className={`profile__input ${
+                  errors.name ? "profile__input_type_error" : ""
+                }`}
                 name="name"
                 minLength="2"
                 maxLength="30"
                 required={true}
-                // value={nameToDisplay}
                 value={values.name ?? ""}
                 onChange={handleChange}
                 disabled={isLoading}
@@ -102,9 +100,9 @@ function Profile({ onLogout, onUpdate }) {
               <span className="profile__input-label">E-mail</span>
               <input
                 type="email"
-                className={classNames("profile__input", {
-                  profile__input_type_error: errors.email,
-                })}
+                className={`profile__input ${
+                  errors.email ? "profile__input_type_error" : ""
+                }`}
                 name="email"
                 required={true}
                 value={values.email ?? ""}

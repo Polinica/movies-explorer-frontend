@@ -28,7 +28,8 @@ function Message({ text, isError = false }) {
 
 const ERROR_MSGS = {
   NOT_FOUND: "Ничего не найдено",
-  CANT_GET_MOVIES: "Во время запроса произошла ошибка.",
+  CANT_GET_MOVIES:
+    "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
 };
 
 function SearchResults({
@@ -93,6 +94,7 @@ function Movies() {
   const [foundMovies, setFoundMovies] = useState(defaultFoundMovies);
   const [isLoading, setIsLoading] = useState(false);
   const [isErrorOnLoading, setIsErrorOnLoading] = useState(false);
+  const [isFirstSearch, setIsFirstSearch] = useState(true); // новое состояние
 
   useEffect(() => {
     localStorage.setItem("searchText", searchText);
@@ -101,7 +103,7 @@ function Movies() {
   }, [searchText, areMoviesSelected, foundMovies]);
 
   useEffect(() => {
-    if (allMovies) {
+    if (allMovies && hasSearchBeenMade && searchText !== "") {
       const foundMovies = searchMovies(
         allMovies,
         searchText,
@@ -109,7 +111,7 @@ function Movies() {
       );
       setFoundMovies(foundMovies);
     }
-  }, [searchText, areMoviesSelected, allMovies]);
+  }, [searchText, areMoviesSelected, allMovies, hasSearchBeenMade]);
 
   async function getMovies() {
     setIsErrorOnLoading(false);
@@ -128,6 +130,7 @@ function Movies() {
     setAreMoviesSelected(areMoviesSelected);
     setSearchText(searchText);
     setHasSearchBeenMade(true);
+    setIsFirstSearch(false);
     localStorage.setItem("searchText", searchText);
     localStorage.setItem(
       "areMoviesSelected",
@@ -210,7 +213,10 @@ function Movies() {
           defaultSearchText={searchText}
           defaultAreMoviesSelected={areMoviesSelected}
         />
-        {foundMovies.length > 0 ? (
+
+        {!searchText && isFirstSearch ? (
+          <Preloader />
+        ) : foundMovies.length > 0 ? (
           <SearchResults
             isErrorOnLoading={isErrorOnLoading}
             isLoading={isLoading}

@@ -3,11 +3,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 import More from "../More/More";
 
-let DEVICE_SETTINGS = {
-  wide: { min: 1280, max: 2560, config: { show: 16, add: 4 } },
-  medium: { min: 768, max: 1280, config: { show: 8, add: 2 } },
-  narrow: { min: 320, max: 767, config: { show: 5, add: 2 } },
-};
+import {DEVICE_SETTINGS} from "../../../utils/apiConfig"
 
 function MoviesCardList({
   movies,

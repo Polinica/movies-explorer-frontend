@@ -1,13 +1,8 @@
 import "./MoviesCard.css";
 import { useState } from "react";
 import { WorkCardButton } from "../CardButton/CardButton";
-import { MOVIE_API } from "../../../utils/apiConfig";
+import { getMovieDuration } from "../../../utils/apiConfig";
 import { SavedCardButton } from "../CardButton/CardButton";
-
-// Функция для форматирования времени
-function getMovieDuration(mins) {
-  return `${Math.floor(mins / 60)}ч ${mins % 60}м`;
-}
 
 function MoviesCard({ movie, isSaved, onClick, isSavedMovieCard = false }) {
   function handleClick() {
@@ -16,7 +11,6 @@ function MoviesCard({ movie, isSaved, onClick, isSavedMovieCard = false }) {
 
   const movieDuration = getMovieDuration(movie.duration); // Форматирование длительности
 
-  
   return (
     <li className="movie-card">
       <a

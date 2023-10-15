@@ -130,23 +130,29 @@ function Movies() {
     setAreMoviesSelected(areMoviesSelected);
     setSearchText(searchText);
     setHasSearchBeenMade(true);
-    setIsFirstSearch(false);
+    // setIsFirstSearch(false);
+
+    if (isFirstSearch) {
+      getMovies();
+      setIsFirstSearch(false);
+    }
+
     localStorage.setItem("searchText", searchText);
     localStorage.setItem(
       "areMoviesSelected",
       JSON.stringify(areMoviesSelected)
     );
     localStorage.setItem("hasSearchBeenMade", JSON.stringify(true));
-    if (!allMovies) getMovies();
+    //if (!allMovies) getMovies();
   }
 
   function handleCheckboxChange(value) {
     setAreMoviesSelected(value);
   }
 
-  useEffect(() => {
-    if (!allMovies) getMovies();
-  }, []);
+  // useEffect(() => {
+  //   if (!allMovies) getMovies();
+  // }, []);
 
   function handleCardClick(movie) {
     const isSaved = savedMovies.some(
@@ -216,9 +222,11 @@ function Movies() {
           defaultAreMoviesSelected={areMoviesSelected}
         />
 
-        {!searchText && isFirstSearch ? (
+        {isLoading ? (
           <Preloader />
-        ) : foundMovies.length > 0 ? (
+        ) : isErrorOnLoading ? (
+          <Message text={ERROR_MSGS.CANT_GET_MOVIES} isError />
+        ) : hasSearchBeenMade && foundMovies.length > 0 ? (
           <SearchResults
             isErrorOnLoading={isErrorOnLoading}
             isLoading={isLoading}
@@ -229,10 +237,6 @@ function Movies() {
         ) : (
           <Message text={ERROR_MSGS.NOT_FOUND} />
         )}
-        {/* {isErrorOnLoading && (
-          <Message text="Ошибка при загрузке фильмов" isError />
-        )}
-        {isLoading && <Preloader />} */}
       </main>
       <Footer />
     </>

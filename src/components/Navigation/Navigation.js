@@ -1,35 +1,39 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import NavigationLink from "../NavigationLink/NavigationLink";
 import "./Navigation.css";
 
 function Navigation({ hasLinkToMain = true }) {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  function toggleMenu() {
-    setIsOpen((state) => !state);
-  }
+  // Открывает и закрывает меню
+  const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  function handleOverlayClick(event) {
-    if (event.target === event.currentTarget) toggleMenu();
-  }
+  // Проверяет является ли элемент, по которому был выполнен клик, самым верхним уровнем, чтобы закрыть меню
+  const handleOverlayClick = (event) => {
+    if (event.target === event.currentTarget) {
+      toggleMenu();
+    }
+  };
 
-  function handleEscClose(event) {
+  //Обработчик нажатия клавиши 'Escape' - закрывает меню при его нажатии
+  const handleEscClose = (event) => {
     if (event.key === "Escape") {
       toggleMenu();
     }
-  }
+  };
 
-  React.useEffect(() => {
+  // Ловляет нажатие клавиши 'Escape', только когда меню открыто и удаляет листенер после закрытия меню
+  useEffect(() => {
     if (isOpen) {
       document.addEventListener("keydown", handleEscClose);
+      return () => {
+        document.removeEventListener("keydown", handleEscClose);
+      };
     }
-
-    return () => {
-      document.removeEventListener("keydown", handleEscClose);
-    };
-  });
+  }, [isOpen]);
 
   return (
+    // Использует isOpen для добавления класса и изменения состояния меню
     <div className="navigation">
       <button
         type="button"
@@ -37,7 +41,6 @@ function Navigation({ hasLinkToMain = true }) {
         aria-label="Открыть меню"
         onClick={toggleMenu}
       ></button>
-
       <div
         className={`navigation__menu${
           isOpen ? " navigation__menu_opened" : ""
@@ -51,7 +54,6 @@ function Navigation({ hasLinkToMain = true }) {
             aria-label="Закрыть меню"
             onClick={toggleMenu}
           ></button>
-
           <ul className="navigation__list">
             {hasLinkToMain && (
               <NavigationLink title="Главная" to="/" isLinkToMain />

@@ -5,7 +5,6 @@
   padding: 0;
   /* Расположение элементов */
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 14px;
   justify-content: center;
   /* Отступы */
@@ -14,19 +13,29 @@
   padding-inline: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .movie-card-list {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* narrow */
     column-gap: 24px;
     row-gap: 35px;
     padding-top: 70px;
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 768px) and (max-width: 1279px) {
   .movie-card-list {
+    grid-template-columns: repeat(2, calc(100% / 2 - 16px)); /* medium */
     column-gap: 20px;
     row-gap: 32px;
     padding-bottom: 10px;
-    grid-template-columns: repeat(4, calc(100% / 4 - 16px));
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1680px) {
+  .movie-card-list {
+    grid-template-columns: repeat(4, calc(100% / 4 - 16px)); /* wide */
+    column-gap: 20px;
+    row-gap: 32px;
+    padding-bottom: 10px;
   }
 }

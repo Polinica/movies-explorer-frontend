@@ -1,41 +1,41 @@
-import classNames from "classnames";
+import React from "react";
 import "./CardButton.css";
 
-function CardButton({ className, type, onClick }) {
-  const TYPE_CONFIG = {
-    save: {
-      text: "",
-      className: "card-button_type_save",
-      alt: "поставить отметку с фильма",
-    },
-    done: {
-      text: "",
-      className: "card-button_type_done",
-      alt: "Снять отметку с фильма",
-    },
-    delete: {
-      text: "",
-      className: "card-button_type_delete",
-      alt: "Удалить фильм из сохранённых",
-    },
-  };
+function createCardButton({ className, alt, onClick, disabled }) {
+  const buttonClass = `card-button ${className} movie-card__button`;
 
   return (
     <button
-      className={classNames(
-        className,
-        TYPE_CONFIG[type].className,
-        "card-button"
-      )}
+      className={buttonClass}
       type="button"
-      {...(TYPE_CONFIG[type].alt
-        ? { "aria-label": TYPE_CONFIG[type].alt }
-        : {})}
+      aria-label={alt}
       onClick={onClick}
-    >
-      {TYPE_CONFIG[type].text}
-    </button>
+      disabled={disabled}
+    ></button>
   );
 }
 
-export default CardButton;
+export function WorkCardButton({ isSaved, onClick, disabled }) {
+  const className = isSaved ? "card-button_type_done" : "card-button_type_save";
+  const alt = isSaved ? "Удалить фильм из сохраненных" : "";
+
+  return createCardButton({
+    className,
+    alt,
+    onClick,
+    disabled,
+  });
+}
+
+export function SavedCardButton({ onClick, disabled }) {
+  const className = "card-button_type_delete";
+  const alt = "Удалить фильм из сохраненных";
+
+  return createCardButton({
+    className,
+    alt,
+
+    onClick,
+    disabled,
+  });
+}

@@ -1,16 +1,16 @@
 import AuthInput from "../AuthInput/AuthInput";
 
-function AuthInputForEmail() {
-  return (
-    <AuthInput
-      label="E-mail"
-      params={{
-        type: "email",
-        name: "email",
-        required: true,
-      }}
-    />
-  );
+function AuthInputForEmail(props) {
+  const emailValidationParams = {
+    label: "E-mail",
+    type: "email",
+    name: "email",
+    required: true,
+    placeholder: "йцукен",
+    ...props,
+  };
+
+  return <AuthInput {...emailValidationParams} />;
 }
 
 export default AuthInputForEmail;
